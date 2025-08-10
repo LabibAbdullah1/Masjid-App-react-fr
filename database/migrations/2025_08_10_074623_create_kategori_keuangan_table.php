@@ -3,25 +3,29 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-return new class extends Migration
+class CreateKategoriKeuanganTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('kategori_keuangan', function (Blueprint $table) {
             $table->id();
+            $table->string('nama'); // contoh: Kas Masjid, Anak Yatim, dll.
             $table->timestamps();
         });
+
+        // Insert kategori default
+        DB::table('kategori_keuangan')->insert([
+            ['nama' => 'Kas Masjid', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Anak Yatim', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Mobil Ambulance', 'created_at' => now(), 'updated_at' => now()],
+            ['nama' => 'Wakaf Pembangunan Masjid', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('kategori_keuangan');
     }
-};
+}
