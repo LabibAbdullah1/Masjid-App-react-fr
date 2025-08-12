@@ -47,7 +47,12 @@ class User extends Authenticatable
         ];
     }
 
-    protected function admin(){
-        
+    protected function IsAdmin()
+    {
+        return $this->role === 'admin';    
+    }
+    protected function IsMembar()
+    {
+        return $this->role === 'member';    
     }
 }

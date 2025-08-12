@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\CheckUserRole;
-
+use App\Http\Controllers\Controller;
 
 class TransaksiController extends Controller
 {
@@ -35,14 +33,13 @@ class TransaksiController extends Controller
     }
 
     // Simpan transaksi baru
-    public function store(Request $request)
+    public function store(Request $request, Transaksi $transaksi)
     {
         $request->validate([
             'tanggal' => 'required|date',
             'kategori' => 'required|in:Kas Masjid,Anak Yatim,Ambulance,Wakaf Pembangunan',
             'jenis' => 'required|in:Pemasukan,Pengeluaran',
             'jumlah' => 'required|numeric|min:0',
-            'role' => 'required|in:admin',
             'keterangan' => 'nullable|string',
         ]);
 
@@ -61,12 +58,12 @@ class TransaksiController extends Controller
     // Update transaksi
     public function update(Request $request, Transaksi $transaksi)
     {
+
         $request->validate([
             'tanggal' => 'required|date',
             'kategori' => 'required|in:Kas Masjid,Anak Yatim,Ambulance,Wakaf Pembangunan',
             'jenis' => 'required|in:Pemasukan,Pengeluaran',
             'jumlah' => 'required|numeric|min:0',
-            'role' => 'required|in:admin',
             'keterangan' => 'nullable|string',
         ]);
 

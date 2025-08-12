@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .text-outline-white {
+        outline: 1px white;
+        /* outline putih */
+    }
+
+    .text-outline-black {
+        outline: 2px black;
+        /* outline hitam */
+    }
+}

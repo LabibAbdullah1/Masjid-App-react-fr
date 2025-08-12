@@ -1,3 +1,19 @@
-<button {{ $attributes->merge(['type' => 'button', 'class' => 'inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150']) }}>
+{{-- Primary Button Masjid --}}
+<button
+    {{ $attributes->merge([
+        'type' => 'submit',
+        'class' => 'inline-flex items-center px-4 py-2
+                            bg-green-700 dark:bg-green-500
+                            border border-transparent rounded-md
+                            font-semibold text-xs text-white dark:text-white
+                            uppercase tracking-widest
+                                hover:bg-green-800 dark:hover:bg-green-600
+                                focus:bg-green-900 dark:focus:bg-green-700
+                                active:bg-green-950 dark:active:bg-green-800
+                                focus:outline-none focus:ring-2
+                                focus:ring-yellow-400 focus:ring-offset-2
+                                dark:focus:ring-offset-gray-800
+                                transition ease-in-out duration-150 shadow-md',
+    ]) }}>
     {{ $slot }}
 </button>
