@@ -11,16 +11,16 @@ class CreateKategoriKeuanganTable extends Migration
     {
         Schema::create('kategori_keuangan', function (Blueprint $table) {
             $table->id();
-            $table->string('nama'); // contoh: Kas Masjid, Anak Yatim, dll.
+            $table->string('nama_kategori'); // contoh: Kas Masjid, Anak Yatim, dll.
             $table->timestamps();
         });
 
         // Insert kategori default
         DB::table('kategori_keuangan')->insert([
-            ['nama' => 'Kas Masjid', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Anak Yatim', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Mobil Ambulance', 'created_at' => now(), 'updated_at' => now()],
-            ['nama' => 'Wakaf Pembangunan Masjid', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Kas Masjid', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Anak Yatim', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Mobil Ambulance', 'created_at' => now(), 'updated_at' => now()],
+            ['nama_kategori' => 'Wakaf Pembangunan Masjid', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

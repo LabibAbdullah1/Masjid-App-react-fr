@@ -1,11 +1,23 @@
 @php
-    // Menu utama
-    $menuItems = [
+    // Definisikan menu untuk Admin
+    $adminMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
-        // ['name' => 'Jadwal Sholat', 'route' => 'jadwal-sholat'],
-        // ['name' => 'Kegiatan', 'route' => 'kegiatan'],
-        // ['name' => 'Kontak', 'route' => 'kontak'],
+        ['name' => 'Kelola Anggota', 'route' => 'admin.anggota.index'],
+        ['name' => 'Keuangan', 'route' => 'transaksi.index'],
+        ['name' => 'Kategori', 'route' => 'kategori'], // Contoh menu khusus admin
     ];
+
+    // Definisikan menu untuk Pengguna Umum
+    $umumMenuItems = [
+        ['name' => 'Dashboard', 'route' => 'dashboard'],
+        ['name' => 'Keuangan', 'route' => 'transaksi.index'],
+    ];
+
+    // Cek peran pengguna dan pilih menu yang sesuai
+    // Pastikan user memiliki kolom 'role' di database
+    // Anda bisa mengganti 'admin' dengan nama role yang Anda gunakan
+    $menuItems = Auth::check() && Auth::user()->role === 'admin' ? $adminMenuItems : $umumMenuItems;
+
 @endphp
 
 <nav x-data="{ open: false }" class="bg-green-800 border-b border-green-700 text-white">
@@ -17,6 +29,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                    </a>
                     </a>
                 </div>
 

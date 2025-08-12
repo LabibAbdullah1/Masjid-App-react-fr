@@ -1,64 +1,70 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use App\Models\KategoriKeuangan;
+use App\Http\Controllers\Controller;
 
 class KategoriKeuanganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+public function index(Request $request)
+{
+    $kategoriList = [
+        'Kas Masjid' => 'Kas Masjid',
+        'Anak Yatim' => 'Anak Yatim',
+        'Ambulance' => 'Ambulance',
+        'Wakaf Pembangunan' => 'Wakaf Pembangunan',
+    ];
+
+    $kategori = $request->get('kategori_id');
+
+    $query = Transaksi::query();
+
+    if ($kategori) {
+        $query->where('kategori', $kategori);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    $transaksis = $query->paginate(10);
+
+    return view('transaksi.index', compact('transaksis', 'kategoriList', 'kategori'));
+}
+
+
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_kategori' => 'required|string|max:255',
+        ]);
+
+        KategoriKeuangan::create($request->all());
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(KategoriKeuangan $kategori)
     {
-        //
+        return view('kategori.edit', compact('kategori'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, KategoriKeuangan $kategori)
     {
-        //
+        $request->validate([
+            'nama_kategori' => 'required|string|max:255',
+        ]);
+
+        $kategori->update($request->all());
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diupdate');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(KategoriKeuangan $kategori)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $kategori->delete();
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
 }

@@ -7,19 +7,43 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'SIM Masjid') }}</title>
-
+    <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon1.svg') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .parallax {
+            background-image: url('{{ asset('images/masjid-bg.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body
-    class="font-sans antialiased min-h-screen
-bg-gradient-to-br from-emerald-50 via-green-50 to-amber-50
-dark:from-emerald-900 dark:via-green-800 dark:to-amber-900
+    class="parallax font-sans antialiased min-h-screen
 text-gray-800 dark:text-gray-100
 selection:bg-emerald-400 selection:text-white
 transition-colors duration-500 ease-in-out">

@@ -49,10 +49,10 @@ class User extends Authenticatable
 
     protected function IsAdmin()
     {
-        return $this->role === 'admin';    
+        return $this->role === 'admin';
     }
     protected function IsMembar()
     {
-        return $this->role === 'member';    
+        return $this->role === 'umum';
     }
 }

@@ -41,14 +41,46 @@
         <!-- Overlay -->
         <div class="overlay flex flex-col flex-1">
             <!-- Navbar -->
-            <nav class="flex justify-between items-center px-8 py-4 bg-white/10 backdrop-blur-sm shadow-md">
-                <h1 class="text-2xl font-bold text-yellow-300">Masjid Al-Falah</h1>
-                <ul class="flex gap-6 text-sm">
-                    <li><a href="#tentang" class="hover:text-yellow-300 transition">Tentang</a></li>
-                    <li><a href="#kegiatan" class="hover:text-yellow-300 transition">Kegiatan</a></li>
-                    <li><a href="#kontak" class="hover:text-yellow-300 transition">Kontak</a></li>
-                </ul>
+            <nav
+                class=" bg-green-800/70 backdrop-blur-lg shadow-xl p-4 flex justify-between items-center fixed w-full top-0 z-20 transition-all duration-300 transform translate-y-0">
+                <div class="flex items-center">
+                    <span class="text-xl font-extrabold md:text-3xl text-yellow-300 dark:text-yellow-400 font-serif">
+                        Masjid Al-Falah
+                    </span>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6 z-10 font-bold">
+                    <a href="#main"
+                        class="text-white hover:text-yellow-400 transition-colors duration-300 ease-in-out transform hover:scale-110">Beranda</a>
+                    <a href="#kegiatan"
+                        class="text-white hover:text-yellow-400 transition-colors duration-300 ease-in-out transform hover:scale-110">Kegiatan</a>
+                    <a href="#kontak"
+                        class="text-white hover:text-yellow-400 transition-colors duration-300 ease-in-out transform hover:scale-110">Kontak</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="menu-button" class="text-white focus:outline-none transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
             </nav>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu"
+                class="hidden md:hidden bg-green-800/70 backdrop-blur-lg shadow-xl p-4 space-y-4 fixed w-full top-16 z-[40]">
+                <a href="#main"
+                    class="block text-center text-white hover:bg-green-700 p-2 rounded-md transition-colors font-bold text-lg">Beranda</a>
+                <a href="#kegiatan"
+                    class="block text-center text-white hover:bg-green-700 p-2 rounded-md transition-colors font-bold text-lg">Kegiatan</a>
+                <a href="#kontak"
+                    class="block text-center text-white hover:bg-green-700 p-2 rounded-md transition-colors font-bold text-lg">Kontak</a>
+            </div>
+            <!-- End Navbar -->
 
             <!-- Hero Content -->
             <div class="flex-1 flex flex-col justify-center items-center text-center px-6 fade-in-up">
@@ -123,7 +155,22 @@
         &copy; {{ date('Y') }} Masjid Al-Falah. Semua Hak Dilindungi.
     </footer>
 
+    <script>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
+        menuButton.addEventListener('click', () => {
+            // Toggle class 'hidden' untuk menampilkan atau menyembunyikan menu
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Tutup menu saat link diklik
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
 </body>
 
 </html>
