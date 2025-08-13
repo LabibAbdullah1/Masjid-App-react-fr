@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransaksiController;
+use App\Http\Controllers\Umum\UmumDashboardController;
 use App\Http\Controllers\Admin\KategoriKeuanganController;
 
 
@@ -26,9 +27,6 @@ Route::get('/register', function () {
 //DASHBOARD perkondisian
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-
-    Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
-    Route::get('/umum/dashboard', [\App\Http\Controllers\DashboardController::class, 'umum'])->name('umum.dashboard');
 });
 
 
@@ -51,6 +49,7 @@ Route::middleware(['admin'])->group(function () {
     Route::put('/anggota', [UserController::class, 'update'])->name('admin.anggota.update');
     Route::delete('/anggota/{id}/delete', [UserController::class, 'delete'])->name('admin.anggota.delete');
 
+    //Kelelo Keuangan
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
@@ -66,7 +65,7 @@ Route::middleware(['admin'])->group(function () {
 
 // Route Khusus untuk umum
 Route::middleware(['umum'])->group(function () {});
-
-
+    Route::get('/dashboard', [UmumDashboardController::class,'index'])->name('dashboard');
+    Route::get('/transaksi', [TransaksiController::class, 'indexUmum'])->name('umum.transaksi');
 
 require __DIR__ . '/auth.php';

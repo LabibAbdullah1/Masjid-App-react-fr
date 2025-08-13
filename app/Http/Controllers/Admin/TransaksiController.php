@@ -15,22 +15,22 @@ class TransaksiController extends Controller
      */
     public function index(Request $request)
     {
-        // Get the category ID from the URL, if it exists.
+
         $kategoriId = $request->input('kategori_id');
 
-        // Base query for all transactions.
+
         $query = Transaksi::query();
 
-        // If a category ID is present, filter the query.
+
         if ($kategoriId) {
             $query->where('kategori_id', $kategoriId);
         }
-                // Jika ada kategori_id, filter transaksinya
+        // Jika ada kategori_id, filter transaksinya
         if ($kategoriId) {
             $transaksiss = Transaksi::where('kategori_id', $kategoriId)->get();
         } else {
             // Jika tidak ada kategori_id, tampilkan semua transaksi
-            $transaksiss = Transaksi::all();
+            $transaksiss = Transaksi::all(1);
         }
 
         // Calculate totals based on the filtered query.
@@ -42,7 +42,7 @@ class TransaksiController extends Controller
         $transaksis = (clone $query)->with('kategori')->latest()->paginate(10);
 
         // Fetch all categories for the filter buttons in the view.
-        $kategoriList = KategoriKeuangan::all();
+        $kategoriList = KategoriKeuangan::id(1);
 
         // Calculate total per category.
         $totalPerKategori = Transaksi::select('kategori_id', DB::raw('SUM(jumlah) as total'))
@@ -63,6 +63,64 @@ class TransaksiController extends Controller
         ));
     }
 
+        public function indexUmum(Request $request)
+    {
+        // Get the category ID from the URL, if it exists.
+        $kategoriId = $request->input('kategori_id');
+
+        // Base query for all transactions.
+        $query = Transaksi::query();
+
+        // If a category ID is present, filter the query.
+        if ($kategoriId) {
+            $query->where('kategori_id', $kategoriId);
+        }
+                // Jika ada kategori_id, filter transaksinya
+        if ($kategoriId) {
+            $transaksiss = Transaksi::where('kategori_id', $kategoriId)->get();
+        } else {
+            // Jika tidak ada kategori_id, tampilkan semua transaksi
+            $transaksiss = Transaksi::where('kategori_id' ,1)->get();
+        }
+        $kategoriList = KategoriKeuangan::all();
+        $activeKategoriName = 'Semua Kategori'; // Default
+        if ($kategoriId) {
+            $activeKategori = $kategoriList->firstWhere('id', $kategoriId);
+            if ($activeKategori) {
+                $activeKategoriName = $activeKategori->nama_kategori;
+            }
+        }
+
+        // Calculate totals based on the filtered query.
+        $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
+        $totalPengeluaran = (clone $query)->where('jenis', 'Pengeluaran')->sum('jumlah');
+        $saldo = $totalPemasukan - $totalPengeluaran;
+
+        // Fetch paginated and filtered transactions.
+        $transaksis = (clone $query)->with('kategori')->latest()->paginate(10);
+
+        // Fetch all categories for the filter buttons in the view.
+        $kategoriList = KategoriKeuangan::all();
+
+        // Calculate total per category.
+        $totalPerKategori = Transaksi::select('kategori_id', DB::raw('SUM(jumlah) as total'))
+            ->with('kategori')
+            ->groupBy('kategori_id')
+            ->orderByDesc('total')
+            ->get();
+
+        return view('umum.transaksi', compact(
+            'transaksis',
+            'transaksiss',
+            'kategoriList',
+            'kategoriId',
+            'totalPemasukan',
+            'totalPengeluaran',
+            'activeKategoriName',
+            'saldo',
+            'totalPerKategori'
+        ));
+    }
     /**
      * Show the form for creating a new resource.
      */

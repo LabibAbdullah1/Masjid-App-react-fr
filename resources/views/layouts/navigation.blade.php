@@ -10,7 +10,7 @@
     // Definisikan menu untuk Pengguna Umum
     $umumMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
-        ['name' => 'Keuangan', 'route' => 'transaksi.index'],
+        ['name' => 'Keuangan', 'route' => 'umum.transaksi'],
     ];
 
     // Cek peran pengguna dan pilih menu yang sesuai
