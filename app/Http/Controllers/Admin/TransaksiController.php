@@ -10,50 +10,41 @@ use App\Http\Controllers\Controller;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
-
+        // 1. Ambil ID kategori dari URL. Jika tidak ada, gunakan nilai default 'semua'.
         $kategoriId = $request->input('kategori_id');
 
-
+        // 2. Mulai kueri Transaksi
         $query = Transaksi::query();
 
-
-        if ($kategoriId) {
+        // 3. Terapkan filter kategori jika kategoriId ada dan bukan 'semua'
+        if ($kategoriId && $kategoriId != 'semua') {
             $query->where('kategori_id', $kategoriId);
         }
-        // Jika ada kategori_id, filter transaksinya
-        if ($kategoriId) {
-            $transaksiss = Transaksi::where('kategori_id', $kategoriId)->get();
-        } else {
-            // Jika tidak ada kategori_id, tampilkan semua transaksi
-            $transaksiss = Transaksi::all(1);
-        }
 
-        // Calculate totals based on the filtered query.
+        // 4. Hitung total pemasukan, pengeluaran, dan saldo dari kueri yang sudah difilter
         $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
         $totalPengeluaran = (clone $query)->where('jenis', 'Pengeluaran')->sum('jumlah');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
-        // Fetch paginated and filtered transactions.
+        // 5. Ambil data transaksi yang sudah difilter dan di-paginate
         $transaksis = (clone $query)->with('kategori')->latest()->paginate(10);
 
-        // Fetch all categories for the filter buttons in the view.
-        $kategoriList = KategoriKeuangan::id(1);
+        // 6. Ambil semua kategori untuk tombol filter di view
+        $kategoriList = KategoriKeuangan::all(); // Pastikan ini model yang benar
 
-        // Calculate total per category.
+        // 7. Hitung total per kategori
         $totalPerKategori = Transaksi::select('kategori_id', DB::raw('SUM(jumlah) as total'))
             ->with('kategori')
             ->groupBy('kategori_id')
             ->orderByDesc('total')
             ->get();
 
+        // 8. Kirim semua data ke view
         return view('transaksi.index', compact(
             'transaksis',
-            'transaksiss',
             'kategoriList',
             'kategoriId',
             'totalPemasukan',
@@ -63,7 +54,8 @@ class TransaksiController extends Controller
         ));
     }
 
-        public function indexUmum(Request $request)
+
+        public function umumindex(Request $request)
     {
         // Get the category ID from the URL, if it exists.
         $kategoriId = $request->input('kategori_id');

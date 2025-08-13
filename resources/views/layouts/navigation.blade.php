@@ -3,21 +3,18 @@
     $adminMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
         ['name' => 'Kelola Anggota', 'route' => 'admin.anggota.index'],
-        ['name' => 'Keuangan', 'route' => 'transaksi.index'],
-        ['name' => 'Kategori', 'route' => 'kategori'], // Contoh menu khusus admin
+        ['name' => 'Keuangan', 'route' => 'transaksi.index'], // Rute untuk admin
+        ['name' => 'Kategori', 'route' => 'kategori.index'], // Menggunakan nama yang lebih standar
     ];
 
     // Definisikan menu untuk Pengguna Umum
     $umumMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
-        ['name' => 'Keuangan', 'route' => 'umum.transaksi'],
+        ['name' => 'Keuangan', 'route' => 'umum.transaksi'], // Rute untuk pengguna umum
     ];
 
     // Cek peran pengguna dan pilih menu yang sesuai
-    // Pastikan user memiliki kolom 'role' di database
-    // Anda bisa mengganti 'admin' dengan nama role yang Anda gunakan
     $menuItems = Auth::check() && Auth::user()->role === 'admin' ? $adminMenuItems : $umumMenuItems;
-
 @endphp
 
 <nav x-data="{ open: false }" class="bg-green-800 border-b border-green-700 text-white">

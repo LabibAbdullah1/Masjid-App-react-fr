@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route Khusu Admin
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
 
 
     //kelola anggota
@@ -50,7 +50,7 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/anggota/{id}/delete', [UserController::class, 'delete'])->name('admin.anggota.delete');
 
     //Kelelo Keuangan
-    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
     Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::get('/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksi.edit');
@@ -64,8 +64,10 @@ Route::middleware(['admin'])->group(function () {
 
 
 // Route Khusus untuk umum
-Route::middleware(['umum'])->group(function () {});
+Route::middleware(['auth','umum'])->group(function () {
+    Route::get('umum/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
+});
     Route::get('/dashboard', [UmumDashboardController::class,'index'])->name('dashboard');
-    Route::get('/transaksi', [TransaksiController::class, 'indexUmum'])->name('umum.transaksi');
+
 
 require __DIR__ . '/auth.php';

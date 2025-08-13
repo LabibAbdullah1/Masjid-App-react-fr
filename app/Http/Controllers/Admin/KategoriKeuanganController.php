@@ -2,69 +2,81 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Transaksi;
-use Illuminate\Http\Request;
 use App\Models\KategoriKeuangan;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class KategoriKeuanganController extends Controller
 {
-public function index(Request $request)
-{
-    $kategoriList = [
-        'Kas Masjid' => 'Kas Masjid',
-        'Anak Yatim' => 'Anak Yatim',
-        'Ambulance' => 'Ambulance',
-        'Wakaf Pembangunan' => 'Wakaf Pembangunan',
-    ];
+    /**
+     * Tampilkan daftar semua kategori.
+     */
+    public function index()
+    {
+        // Ambil semua kategori
+        $kategoris = KategoriKeuangan::orderBy('id', 'desc')->paginate(10);
 
-    $kategori = $request->get('kategori_id');
-
-    $query = Transaksi::query();
-
-    if ($kategori) {
-        $query->where('kategori', $kategori);
+        return view('kategori.index', compact('kategoris'));
     }
 
-    $transaksis = $query->paginate(10);
-
-    return view('transaksi.index', compact('transaksis', 'kategoriList', 'kategori'));
-}
-
-
+    /**
+     * Form tambah kategori baru.
+     */
     public function create()
     {
         return view('kategori.create');
     }
 
+    /**
+     * Simpan kategori baru ke database.
+     */
     public function store(Request $request)
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:255',
         ]);
 
-        KategoriKeuangan::create($request->all());
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan');
+        KategoriKeuangan::create([
+            'nama_kategori' => $request->nama_kategori
+        ]);
+
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
-    public function edit(KategoriKeuangan $kategori)
+    /**
+     * Form edit kategori.
+     */
+    public function edit($id)
     {
+        $kategori = KategoriKeuangan::findOrFail($id);
         return view('kategori.edit', compact('kategori'));
     }
 
-    public function update(Request $request, KategoriKeuangan $kategori)
+    /**
+     * Update kategori.
+     */
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama_kategori' => 'required|string|max:255',
         ]);
 
-        $kategori->update($request->all());
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diupdate');
+        $kategori = KategoriKeuangan::findOrFail($id);
+        $kategori->update([
+            'nama_kategori' => $request->nama_kategori
+        ]);
+
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
-    public function destroy(KategoriKeuangan $kategori)
+    /**
+     * Hapus kategori.
+     */
+    public function destroy($id)
     {
+        $kategori = KategoriKeuangan::findOrFail($id);
         $kategori->delete();
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');
+
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }
