@@ -4,10 +4,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\JadwalSholatController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\Admin\GaleriController;
+use App\Http\Controllers\JadwalSholatController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Umum\UmumDashboardController;
+use App\Http\Controllers\Admin\JadwalCeramahController;
 use App\Http\Controllers\Admin\KategoriKeuanganController;
 
 
@@ -58,6 +61,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 
     Route::resource('kategori', KategoriKeuanganController::class);
+    Route::resource('galeri', GaleriController::class);
+    Route::resource('quote', QuoteController::class);
+    Route::resource('jadwal-ceramah', JadwalCeramahController::class);
 })->middleware('admin');
 
 // route khusus umum
