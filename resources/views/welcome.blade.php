@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masjid Al-Falah</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="font-sans antialiased text-black bg-cover bg-center bg-fixed bg-no-repeat"
@@ -67,23 +71,14 @@
                     Bergabunglah dengan kami dalam kegiatan keagamaan dan sosial.
                 </p>
                 <div class="mt-6 flex gap-4">
-                    @guest
-                        <a href="{{ route('login') }}"
-                            class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
-                            Login
-                        </a>
-                        <a href="{{ route('register') }}"
-                            class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
-                            Register
-                        </a>
-                    @endguest
-
-                    @auth
-                        <a href="{{ route('dashboard') }}"
-                            class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
-                            Dashboard
-                        </a>
-                    @endauth
+                    <a href="{{ route('login') }}"
+                        class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}"
+                        class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
+                        Register
+                    </a>
                 </div>
             </div>
         </div>
