@@ -5,36 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masjid Al-Falah</title>
-    @vite('resources/css/app.css')
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-
-        /* Parallax background */
-        .parallax {
-            background-image: url('{{ asset('images/masjid-bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }
-    </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased text-black parallax ">
+<body class="font-sans antialiased text-black bg-cover bg-center bg-fixed bg-no-repeat"
+    style="background-image: url('{{ asset('images/masjid-bg.jpg') }}');">
 
     <!-- Hero dengan parallax -->
     <section class=" min-h-screen flex flex-col">
@@ -92,14 +67,23 @@
                     Bergabunglah dengan kami dalam kegiatan keagamaan dan sosial.
                 </p>
                 <div class="mt-6 flex gap-4">
-                    <a href="{{ route('login') }}"
-                        class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
-                        Login
-                    </a>
-                    <a href="{{ route('register') }}"
-                        class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
-                        Register
-                    </a>
+                    @guest
+                        <a href="{{ route('login') }}"
+                            class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
+                            Login
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
+                            Register
+                        </a>
+                    @endguest
+
+                    @auth
+                        <a href="{{ route('dashboard') }}"
+                            class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
+                            Dashboard
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>

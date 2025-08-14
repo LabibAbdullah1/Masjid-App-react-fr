@@ -77,7 +77,7 @@
         </div>
 
         {{-- Tabel Transaksi --}}
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden border-2 border-green-600">
+        <div class="max-w-full bg-white shadow-lg rounded-lg overflow-x-auto border-2 border-green-600">
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>

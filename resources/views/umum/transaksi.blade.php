@@ -1,43 +1,40 @@
-{{-- resources/views/transaksi/public.blade.php --}}
+{{-- resources/views/umum/transaksi.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white/50 rounded-lg">
-
+    <div class="container mx-auto px-4 py-8">
         {{-- Header --}}
-        <div class="mb-6 text-center">
-            <h1 class="text-3xl font-extrabold mt-2 text-gray-800">Laporan Keuangan Masjid Al-Falah</h1>
-            <p class="text-gray-600 font-semibold text-md">Informasi transaksi keuangan terkini
-            </p>
-        </div>
-        <nav class="bg-gray-800 text-white rounded-t-lg p-4 shadow-lg">
+        <h1 class="text-3xl font-bold mb-2 text-center text-green-700">
+            <i class="fas fa-money-bill-wave mr-2"></i> Laporan Keuangan Masjid Al-Falah
+        </h1>
+        <p class="text-gray-600 font-semibold text-center mb-6">
+            Informasi transaksi terkini
+        </p>
+
+        {{-- Navigasi Kategori --}}
+        <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0">
             <ul class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0 items-center justify-center">
                 @foreach ($kategoriList as $kategori)
                     @php
-                        // Dapatkan ID kategori dari URL
                         $currentKategoriId = request()->input('kategori_id');
-                        // Tentukan kelas "active"
                         $isActive = $currentKategoriId == $kategori->id;
-                        // Tambahkan kelas CSS untuk state aktif
                         $activeClass = $isActive
-                            ? 'bg-green-600 text-white'
-                            : 'text-gray-200 hover:text-green-300 hover:bg-gray-700';
+                            ? 'bg-yellow-500 text-white'
+                            : 'text-white hover:text-yellow-300 hover:bg-green-700';
                     @endphp
                     <li>
                         <a href="{{ route('umum.transaksi', ['kategori_id' => $kategori->id]) }}"
-                            class="nav-link block px-4 py-2 text-md font-semibold
-                   transition duration-300 ease-in-out rounded-lg
-                   focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75
-                   {{ $activeClass }}">
+                            class="block px-4 py-2 text-md font-semibold transition duration-300 ease-in-out rounded-lg {{ $activeClass }}">
                             {{ $kategori->nama_kategori }}
                         </a>
                     </li>
                 @endforeach
             </ul>
         </nav>
+
         {{-- Ringkasan Keuangan --}}
-        <div class="bg-white p-4 rounded-b-lg shadow mb-6">
-            <h2 class="text-lg font-semibold mb-3">Ringkasan Keuangan {{ $activeKategoriName }}</h2>
+        <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600">
+            <h2 class="text-lg font-semibold mb-3">Ringkasan {{ $activeKategoriName }}</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="p-3 bg-green-100 rounded">
                     <span class="block text-sm text-green-700">Total Pemasukan</span>
@@ -72,33 +69,32 @@
             </div>
         </div>
 
-
         {{-- Tabel Data --}}
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full table-auto border-collapse">
-                <thead class="bg-gray-100">
+        <div class="max-w-full bg-white shadow-lg rounded-lg overflow-x-auto border-2 border-green-600">
+            <table class="min-w-full leading-normal">
+                <thead class="bg-green-600 text-white">
                     <tr>
-                        <th class="px-4 py-2 text-left text-gray-600 text-sm">No</th>
-                        <th class="px-4 py-2 text-left text-gray-600 text-sm">Tanggal</th>
-                        <th class="px-4 py-2 text-left text-gray-600 text-sm">Jenis</th>
-                        <th class="px-4 py-2 text-left text-gray-600 text-sm">Jumlah</th>
-                        <th class="px-4 py-2 text-left text-gray-600 text-sm">Keterangan</th>
+                        <th class="px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider">No</th>
+                        <th class="px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider">Tanggal</th>
+                        <th class="px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider">Jenis</th>
+                        <th class="px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider">Jumlah</th>
+                        <th class="px-5 py-3 text-left text-sm font-semibold uppercase tracking-wider">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($transaksis as $index => $item)
-                        <tr class="border-b hover:bg-gray-50">
-                            <td class="px-4 py-2 text-sm">
+                    @forelse ($transaksis as $item)
+                        <tr class="hover:bg-green-50 transition duration-150">
+                            <td class="px-5 py-5 text-sm">
                                 {{ $loop->iteration + ($transaksis->currentPage() - 1) * $transaksis->perPage() }}
                             </td>
-                            <td class="px-4 py-2 text-sm">{{ $item->created_at->format('d-m-Y') }}</td>
-                            <td class="px-4 py-2 text-sm capitalize">{{ $item->jenis }}</td>
-                            <td class="px-4 py-2 text-sm">Rp.{{ number_format($item->jumlah, 0, ',', '.') }}</td>
-                            <td class="px-4 py-2 text-sm">{{ $item->nama }}</td>
+                            <td class="px-5 py-5 text-sm">{{ $item->created_at->format('d-m-Y') }}</td>
+                            <td class="px-5 py-5 text-sm capitalize">{{ $item->jenis }}</td>
+                            <td class="px-5 py-5 text-sm">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>
+                            <td class="px-5 py-5 text-sm">{{ $item->nama }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-4 text-center text-gray-500">Tidak ada data</td>
+                            <td colspan="5" class="px-5 py-5 text-center text-gray-500">Tidak ada data</td>
                         </tr>
                     @endforelse
                 </tbody>

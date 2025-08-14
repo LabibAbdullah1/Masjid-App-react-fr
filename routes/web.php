@@ -1,9 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Admin\GaleriController;
@@ -14,7 +12,7 @@ use App\Http\Controllers\Admin\JadwalCeramahController;
 use App\Http\Controllers\Admin\KategoriKeuanganController;
 
 
-// HALAMAN UTAMA
+// HALAMAN UTAMA APP
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,20 +26,22 @@ Route::get('/register', function () {
     return view('auth', ['form' => 'register']);
 })->name('register');
 
-//DASHBOARD perkondisian
+// DASHBOARD Perkondisian
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 });
 
 
-// Profile untuk Admin dan umum
+    // Profile untuk Admin dan umum
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route Khusu Admin
+    // ----------------- //
+    // Route Khusu Admin
+    // ----------------- //
 Route::middleware(['auth', 'admin'])->group(function () {
 
     //kelola anggota
@@ -60,15 +60,29 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/transaksi/{transaksi}', [TransaksiController::class, 'update'])->name('transaksi.update');
     Route::delete('/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 
+    //kelola kategori
     Route::resource('kategori', KategoriKeuanganController::class);
+
+    //kelola galeri
     Route::resource('galeri', GaleriController::class);
+
+    //kelola quote
     Route::resource('quote', QuoteController::class);
+
+    //kelola jadwal ceramah
     Route::resource('jadwal-ceramah', JadwalCeramahController::class);
 })->middleware('admin');
 
+// ----------------- //
 // route khusus umum
+// ----------------- //
+//transaksi leyer
 Route::get('/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
+
+//jadwal sholat layer
 Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
+
+// dashboar layer
 Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
 
 

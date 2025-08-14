@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden border-2 border-green-600">
+        <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600">
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>

@@ -6,7 +6,7 @@
             <div class="card-body">
 
                 {{-- Header Dashboard --}}
-                <div class="bg-green-600 text-white text-center py-8 rounded-lg shadow mb-8">
+                <div class="bg-green-600 text-white text-center py-8 rounded-lg shadow mb-8 p-6">
                     <h1 class="text-4xl font-bold tracking-wide font-[Amiri]">Dashboard Jamaah</h1>
                     <p class="text-lg mt-2">Assalamualaikum, {{ Auth::user()->name }}! Selamat datang di SIM Masjid.</p>
                 </div>

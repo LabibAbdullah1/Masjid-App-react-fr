@@ -14,68 +14,46 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .parallax {
-            background-image: url('{{ asset('images/masjid-bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }
-    </style>
 </head>
 
-<body
-    class="parallax font-sans antialiased min-h-screen
-text-gray-800 dark:text-gray-100
-selection:bg-emerald-400 selection:text-white
-transition-colors duration-500 ease-in-out">
+<body class="bg-cover bg-center bg-fixed bg-no-repeat"
+    style="background-image: url('{{ asset('images/masjid-bg.jpg') }}'); font-sans antialiased min-h-screen text-gray-800 dark:text-gray-100 selection:bg-emerald-400 selection:text-white
+    transition-colors duration-500 ease-in-out">
 
     <div class="min-h-screen flex flex-col">
 
-        {{-- Navigasi --}}
+        {{-- Sidebar & Navigation --}}
         @include('layouts.navigation')
 
-        {{-- Page Header --}}
-        @isset($header)
-            <header class="bg-gradient-to-r from-green-700 to-green-500 text-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+        {{-- Wrapper Konten --}}
+        <div class="flex flex-col flex-1 sm:ml-64 mt-16 sm:mt-0">
+            {{-- Page Header --}}
+            @isset($header)
+                <header class="bg-gradient-to-r from-green-700 to-green-500 text-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
+
+            {{-- Page Content --}}
+            <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8">
+                @yield('content')
+            </main>
+
+            {{-- Footer --}}
+            <footer class="bg-green-700 text-white mt-8">
+                <div
+                    class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 sm:pl-[calc(1rem+16rem)] flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+                    <p class="text-sm">&copy; {{ date('Y') }} SIM Masjid. All rights reserved.</p>
+                    <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
                 </div>
-            </header>
-        @endisset
+            </footer>
 
-        {{-- Page Content --}}
-        <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8">
-            @yield('content')
-        </main>
-
-        {{-- Footer --}}
-        <footer class="bg-green-700 text-white mt-8">
-            <div
-                class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
-                <p class="text-sm">&copy; {{ date('Y') }} SIM Masjid. All rights reserved.</p>
-                <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
-            </div>
-        </footer>
+        </div>
     </div>
 </body>
+
+
 
 </html>

@@ -15,34 +15,10 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .parallax {
-            background-image: url('{{ asset('images/masjid-bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-        }
-    </style>
 </head>
 
-<body class="font-sans text-gray-900 antialiased parallax">
+<body class="font-sans text-gray-900 antialiased bg-cover bg-center bg-fixed bg-no-repeat"
+    style="background-image: url('{{ asset('images/masjid-bg.jpg') }}');">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-transparent">
         <div>
             <a href="/">
