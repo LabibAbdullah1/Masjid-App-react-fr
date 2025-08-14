@@ -1,31 +1,108 @@
 @extends('layouts.app')
-@section('title', 'Admin Dasboard')
+
 @section('content')
-    <div class="card shadow">
-        <div class="card-body">
-            <h1 class="text-success fw-bold">Dashboard Admin</h1>
-            <p>Selamat datang, {{ Auth::user()->name }}! Anda masuk sebagai <b>Admin</b>.</p>
-            <hr>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="p-3 bg-success text-black rounded shadow-sm">
-                        <h5>Data Jamaah</h5>
-                        <p>Kelola data jamaah masjid.</p>
+    <div class="container mx-auto px-4 py-8">
+        <div class="card shadow bg-white rounded-lg p-6">
+            <div class="card-body">
+                <h1 class="text-3xl font-extrabold text-gray-800">Dashboard Jamaah</h1>
+                <p class="text-lg text-gray-600 mt-2">Assalamualaikum, {{ Auth::user()->name }}! Selamat datang di SIM
+                    Masjid.</p>
+                <hr class="my-4 border-gray-300">
+            </div>
+
+            {{-- Jadwal Sholat --}}
+            <div class="bg-gray-100 rounded-lg p-4 mb-6 shadow-sm">
+                @if ($jadwal)
+                    <h3>Jadwal Sholat - {{ $jadwal['city'] }}, {{ $jadwal['country'] }}</h3>
+                    <p>Tanggal: {{ $jadwal['date_readable'] }} (Hijri: {{ $jadwal['hijri'] }})</p>
+                    <table class="table table-bordered">
+                        @foreach ($jadwal['timings'] as $name => $time)
+                            <tr>
+                                <td>{{ $name }}</td>
+                                <td>{{ $time }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @else
+                    <p>Gagal mengambil jadwal sholat</p>
+                @endif
+            </div>
+            {{-- Kutipan Al-Qur'an & Hadits (Dapat Dikelola Admin) --}}
+            <div class="bg-gray-100 rounded-lg p-4 mb-6 shadow-sm">
+                <h2 class="text-xl font-bold text-gray-700">Inspirasi Harian</h2>
+                @if ($quote)
+                    <blockquote class="italic text-gray-600 mt-2 border-l-4 border-green-500 pl-4">
+                        <p class="text-lg">{{ $quote->text }}</p>
+                        <footer class="mt-2 text-sm font-semibold text-gray-500">{{ $quote->source }}</footer>
+                    </blockquote>
+                @else
+                    <p class="text-gray-500 mt-2">Tidak ada kutipan yang tersedia saat ini.</p>
+                @endif
+            </div>
+
+            {{-- Ringkasan Kas Masjid --}}
+            <div class="bg-green-600 text-white rounded-lg p-4 mb-6 shadow-md">
+                <h2 class="text-xl font-bold">Ringkasan Kas Masjid</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                    <div class="p-3 bg-white bg-opacity-20 rounded-lg text-center">
+                        <span class="block text-sm">Total Pemasukan</span>
+                        <span class="text-2xl font-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</span>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 bg-warning text-black rounded shadow-sm">
-                        <h5>Kegiatan</h5>
-                        <p>Kelola kegiatan masjid.</p>
+                    <div class="p-3 bg-white bg-opacity-20 rounded-lg text-center">
+                        <span class="block text-sm">Total Pengeluaran</span>
+                        <span class="text-2xl font-bold">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</span>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-3 bg-primary text-black rounded shadow-sm">
-                        <h5>Laporan Keuangan</h5>
-                        <p>Kelola kas dan laporan masjid.</p>
+                    <div class="p-3 bg-white bg-opacity-20 rounded-lg text-center">
+                        <span class="block text-sm">Saldo Saat Ini</span>
+                        <span class="text-2xl font-bold">Rp {{ number_format($saldo, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>
+
+            {{-- Jadwal Ceramah Bulanan --}}
+            <div class="bg-gray-100 rounded-lg p-4 mb-6 shadow-sm">
+                <h2 class="text-xl font-bold text-gray-700">Jadwal Ceramah Bulan Ini</h2>
+                <div class="mt-4">
+                    @forelse ($jadwalCeramah as $jadwal)
+                        <div class="flex items-center space-x-4 p-3 mb-2 bg-white rounded shadow-sm">
+                            <div class="flex-shrink-0 text-center">
+                                <p class="text-xl font-bold text-green-600">
+                                    {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d') }}</p>
+                                <p class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('M') }}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">{{ $jadwal->judul }}</p>
+                                <p class="text-sm text-gray-600">Oleh: {{ $jadwal->penceramah }}</p>
+                                <p class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }}
+                                    WIB</p>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-gray-500">Tidak ada jadwal ceramah yang tersedia.</p>
+                    @endforelse
+                </div>
+            </div>
+
+            {{-- Galeri --}}
+            <div class="bg-gray-100 rounded-lg p-4 shadow-sm">
+                {{-- <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-700">Galeri Foto</h2>
+                    <a href="{{ route('galeri.index') }}" class="text-blue-600 hover:text-blue-800 font-semibold">Lihat
+                        Semua →</a>
+                </div> --}}
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    @forelse ($galeri as $item)
+                        <div class="overflow-hidden rounded-lg shadow-md">
+                            <img src="{{ asset('storage/' . $item->path) }}" alt="{{ $item->nama }}"
+                                class="w-full h-40 object-cover">
+                        </div>
+                    @empty
+                        <p class="text-gray-500">Galeri kosong.</p>
+                    @endforelse
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

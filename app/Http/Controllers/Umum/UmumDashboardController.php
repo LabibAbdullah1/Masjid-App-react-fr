@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Umum;
 
-use App\Http\Controllers\Controller;
 use App\Models\Quote;
-use App\Models\JadwalCeramah;
 use App\Models\Galeri;
-use App\Models\KategoriKeuangan;
-use App\Models\Transaksi; // Asumsi model Transaksi sudah ada
 use Illuminate\Http\Request;
+use App\Models\JadwalCeramah;
+use App\Models\KategoriKeuangan;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\JadwalSholatController;
+use App\Models\Transaksi; // Asumsi model Transaksi sudah ada
 
 class UmumDashboardController extends Controller
 {
-    public function index()
+    public function index(JadwalSholatController $jadwalSholat)
     {
+        $jadwal = $jadwalSholat->getJadwal('Pekanbaru', 'Indonesia');
         // 1. Ambil ID dari kategori "Kas Masjid"
         $kategoriKasMasjid = KategoriKeuangan::where('nama_kategori', 'Kas Masjid')->first();
 
@@ -46,8 +48,8 @@ class UmumDashboardController extends Controller
 
         // Ambil beberapa item galeri terbaru (contoh: 4 foto)
         $galeri = Galeri::latest()->take(4)->get();
-
         return view('umum.dashboard', compact(
+            'jadwal',
             'totalPemasukan',
             'totalPengeluaran',
             'saldo',

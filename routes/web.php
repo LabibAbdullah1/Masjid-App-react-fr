@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JadwalSholatController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Umum\UmumDashboardController;
@@ -40,7 +41,6 @@ Route::middleware('auth')->group(function () {
 // Route Khusu Admin
 Route::middleware(['auth', 'admin'])->group(function () {
 
-
     //kelola anggota
     Route::get('/anggota', [UserController::class, 'index'])->name('admin.anggota.index');
     Route::get('/anggota/create', [UserController::class, 'create'])->name('admin.anggota.create');
@@ -52,22 +52,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //Kelelo Keuangan
     Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
-    Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+    Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::get('/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksi.edit');
     Route::put('/transaksi/{transaksi}', [TransaksiController::class, 'update'])->name('transaksi.update');
     Route::delete('/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 
     Route::resource('kategori', KategoriKeuanganController::class);
-
-
 })->middleware('admin');
 
-
-// Route Khusus untuk umum
-Route::middleware(['auth','umum'])->group(function () {
-    Route::get('umum/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
-});
-    Route::get('/dashboard', [UmumDashboardController::class,'index'])->name('dashboard');
+// route khusus umum
+Route::get('/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
+Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
+Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
 
 
 require __DIR__ . '/auth.php';
