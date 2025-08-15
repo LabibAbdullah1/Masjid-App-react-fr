@@ -14,8 +14,8 @@
                 {{-- Jadwal Sholat --}}
                 <div class="border border-green-200 rounded-lg shadow mb-8 p-6 bg-white">
                     <div class="bg-green-600 text-white text-center py-6 rounded mb-6">
-                        <h1 class="text-2xl font-bold font-[Amiri]">Jadwal Sholat</h1>
-                        <p class="text-lg">{{ $jadwal['city'] ?? '-' }}, {{ $jadwal['country'] ?? '-' }}</p>
+                        <h1 class="text-xl font-bold font-[Amiri]">Jadwal Sholat</h1>
+                        <p class="text-md">{{ $jadwal['city'] ?? '-' }}, {{ $jadwal['country'] ?? '-' }}</p>
                         <p class="text-sm">
                             {{ $jadwal['date_readable'] ?? '-' }} (Hijriah: {{ $jadwal['hijriah'] ?? '-' }})
                         </p>

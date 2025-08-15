@@ -41,7 +41,7 @@
                     @forelse ($umums as $umum)
                         <tr class="hover:bg-green-50 transition duration-150">
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                {{ $loop->iteration }}
+                                {{ $loop->iteration + ($umums->currentPage() - 1) * $umums->perPage() }}
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $umum->name }}

@@ -22,13 +22,13 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'isi' => 'required|string',
-            'penulis' => 'nullable|string|max:255',
+            'text' => 'required|string',
+            'source' => 'nullable|string|max:255',
         ]);
 
         Quote::create([
-            'isi' => $request->isi,
-            'penulis' => $request->penulis,
+            'text' => $request->text,
+            'source' => $request->source,
         ]);
 
         return redirect()->route('admin.quote.index')->with('success', 'Quote berhasil ditambahkan.');
@@ -42,13 +42,13 @@ class QuoteController extends Controller
     public function update(Request $request, Quote $quote)
     {
         $request->validate([
-            'isi' => 'required|string',
-            'penulis' => 'nullable|string|max:255',
+            'text' => 'required|string',
+            'source' => 'nullable|string|max:255',
         ]);
 
         $quote->update([
-            'isi' => $request->isi,
-            'penulis' => $request->penulis,
+            'text' => $request->text,
+            'source' => $request->source,
         ]);
 
         return redirect()->route('admin.quote.index')->with('success', 'Quote berhasil diperbarui.');

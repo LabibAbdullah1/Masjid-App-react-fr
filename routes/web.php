@@ -67,7 +67,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('galeri', GaleriController::class);
 
     //kelola quote
-    Route::resource('quote', QuoteController::class);
+    Route::get('quote', [QuoteController::class, 'index'])->name('admin.quote.index');
+    Route::get('quote/create', [QuoteController::class, 'create'])->name('admin.quote.create');
+    Route::post('quote', [QuoteController::class, 'store'])->name('admin.quote.store');
+    Route::get('quote/{quote}/edit', [QuoteController::class, 'edit'])->name('admin.quote.edit');
+    Route::put('quote/{quote}', [QuoteController::class, 'update'])->name('admin.quote.update');
+    Route::delete('quote/{quote}', [QuoteController::class, 'destroy'])->name('admin.quote.destroy');
+
 
     //kelola jadwal ceramah
     Route::resource('jadwal-ceramah', JadwalCeramahController::class);

@@ -2,9 +2,10 @@
     // Definisikan menu untuk Admin
     $adminMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
-        ['name' => 'Kelola Anggota', 'route' => 'admin.anggota.index'],
+        ['name' => 'Anggota', 'route' => 'admin.anggota.index'],
         ['name' => 'Keuangan', 'route' => 'transaksi.index'],
         ['name' => 'Kategori', 'route' => 'kategori.index'],
+        ['name' => 'Quotes', 'route' => 'admin.quote.index'],
     ];
 
     // Definisikan menu untuk Pengguna Umum
