@@ -7,8 +7,14 @@
     <title>Masjid Al-Falah</title>
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <script src="https://unpkg.com/alpinejs" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Font Inter dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 </head>
 
@@ -71,15 +77,27 @@
                     Bergabunglah dengan kami dalam kegiatan keagamaan dan sosial.
                 </p>
                 <div class="mt-6 flex gap-4">
-                    <a href="{{ route('login') }}"
-                        class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
-                        Login
-                    </a>
-                    <a href="{{ route('register') }}"
-                        class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
-                        Register
-                    </a>
+                    @auth
+                        <!-- Kalau user sudah login -->
+                        <a href="{{ route('dashboard') }}"
+                            class="px-5 py-3 bg-yellow-500 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
+                            Dashboard
+                        </a>
+                    @endauth
+
+                    @guest
+                        <!-- Kalau user belum login -->
+                        <a href="{{ route('login') }}"
+                            class="px-5 py-3 bg-yellow-300 text-gray-900 font-semibold rounded-lg shadow hover:bg-yellow-400 transition">
+                            Login
+                        </a>
+                        <a href="{{ route('register') }}"
+                            class="px-5 py-3 bg-transparent border border-yellow-300 text-yellow-300 font-semibold rounded-lg shadow hover:bg-yellow-300 hover:text-gray-900 transition">
+                            Register
+                        </a>
+                    @endguest
                 </div>
+
             </div>
         </div>
     </section>

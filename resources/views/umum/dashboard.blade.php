@@ -69,15 +69,18 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div class="p-3 bg-green-50 rounded-lg text-center border border-green-200">
                             <span class="block text-sm">Total Pemasukan</span>
-                            <span class="text-2xl font-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-green-500 font-bold ">Rp
+                                {{ number_format($totalPemasukan, 0, ',', '.') }}</span>
                         </div>
                         <div class="p-3 bg-red-50 rounded-lg text-center border border-red-200">
                             <span class="block text-sm">Total Pengeluaran</span>
-                            <span class="text-2xl font-bold">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-red-500 font-bold">Rp
+                                {{ number_format($totalPengeluaran, 0, ',', '.') }}</span>
                         </div>
                         <div class="p-3 bg-blue-50 rounded-lg text-center border border-blue-200">
                             <span class="block text-sm">Saldo Saat Ini</span>
-                            <span class="text-2xl font-bold">Rp {{ number_format($saldo, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-blue-500 font-bold">Rp
+                                {{ number_format($saldo, 0, ',', '.') }}</span>
                         </div>
                     </div>
                 </div>
