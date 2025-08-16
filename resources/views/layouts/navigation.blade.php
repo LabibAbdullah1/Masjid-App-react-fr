@@ -6,12 +6,14 @@
         ['name' => 'Keuangan', 'route' => 'transaksi.index'],
         ['name' => 'Kategori', 'route' => 'kategori.index'],
         ['name' => 'Quotes', 'route' => 'admin.quote.index'],
+        ['name' => 'Galeri', 'route' => 'admin.galeri.index'],
     ];
 
     // Definisikan menu untuk Pengguna Umum
     $umumMenuItems = [
         ['name' => 'Dashboard', 'route' => 'dashboard'],
         ['name' => 'Keuangan', 'route' => 'umum.transaksi'],
+        ['name' => 'Galeri', 'route' => 'umum.galeri'],
     ];
 
     // Pilih menu sesuai role
@@ -105,9 +107,10 @@
             <!-- User Info -->
             <div class="border-t border-green-700 p-4">
                 <div class="font-medium">{{ Auth::user()->name }}</div>
-                <div class="text-sm text-yellow-200">{{ Auth::user()->email }}</div>
+                <div class="text-sm text-yellow-200">{{ Auth::user()->email }}
+                </div>
 
-                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')" @click="open = false">
+                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')" @click="open = false" class="mt-4">
                     {{ __('Kelola Profil') }}
                 </x-responsive-nav-link>
 

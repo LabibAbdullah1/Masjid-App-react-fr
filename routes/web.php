@@ -32,16 +32,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-    // Profile untuk Admin dan umum
+// Profile untuk Admin dan umum
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-    // ----------------- //
-    // Route Khusu Admin
-    // ----------------- //
+// ----------------- //
+// Route Khusu Admin
+// ----------------- //
 Route::middleware(['auth', 'admin'])->group(function () {
 
     //kelola anggota
@@ -60,13 +60,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/transaksi/{transaksi}', [TransaksiController::class, 'update'])->name('transaksi.update');
     Route::delete('/transaksi/{transaksi}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 
-    //kelola kategori
-    Route::resource('kategori', KategoriKeuanganController::class);
 
-    //kelola galeri
-    Route::resource('galeri', GaleriController::class);
+    // Kelola Galeri
+    Route::get('/admin/galeri', [GaleriController::class, 'index'])->name('admin.galeri.index');
+    Route::get('/admin/galeri/create', [GaleriController::class, 'create'])->name('admin.galeri.create');
+    Route::post('/admin/galeri', [GaleriController::class, 'store'])->name('admin.galeri.store');
+    Route::get('/admin/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('admin.galeri.edit');
+    Route::put('/admin/galeri/{id}', [GaleriController::class, 'update'])->name('admin.galeri.update');
+    Route::delete('/admin/galeri/{galeri}', [GaleriController::class, 'destroy'])->name('admin.galeri.destroy');
 
-    //kelola quote
+
+    // Kelola quote
     Route::get('quote', [QuoteController::class, 'index'])->name('admin.quote.index');
     Route::get('quote/create', [QuoteController::class, 'create'])->name('admin.quote.create');
     Route::post('quote', [QuoteController::class, 'store'])->name('admin.quote.store');
@@ -77,6 +81,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //kelola jadwal ceramah
     Route::resource('jadwal-ceramah', JadwalCeramahController::class);
+
+    // Kelola kategori
+    Route::resource('kategori', KategoriKeuanganController::class);
 })->middleware('admin');
 
 // ----------------- //
@@ -90,6 +97,10 @@ Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name
 
 // dashboar layer
 Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
+
+// Tampilan Galeri
+Route::get('/galeri', [GaleriController::class, 'public'])->name('umum.galeri');
+
 
 
 require __DIR__ . '/auth.php';

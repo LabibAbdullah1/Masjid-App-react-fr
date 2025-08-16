@@ -115,8 +115,9 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @forelse ($galeri as $item)
                             <div class="overflow-hidden rounded-lg shadow border border-green-100">
-                                <img src="{{ asset('storage/' . $item->path) }}" alt="{{ $item->nama }}"
+                                <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}"
                                     class="w-full h-40 object-cover">
+                                <p class="py-1 px-2 text-sm font-semibold">{{ $item->nama }}</p>
                             </div>
                         @empty
                             <p class="text-gray-500">Galeri kosong.</p>

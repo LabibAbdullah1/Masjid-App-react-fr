@@ -13,6 +13,6 @@ class Galeri extends Model
 
     protected $fillable = [
         'nama',
-        'path',
+        'gambar',
     ];
 }

@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('galeri', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('path');
+            $table->string('gambar');
             $table->timestamps();
         });
     }

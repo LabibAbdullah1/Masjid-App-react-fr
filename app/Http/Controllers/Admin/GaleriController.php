@@ -14,6 +14,12 @@ class GaleriController extends Controller
         $galeri = Galeri::latest()->paginate(10);
         return view('admin.galeri.index', compact('galeri'));
     }
+    public function public()
+{
+    $galeri = Galeri::latest()->paginate(20);
+    return view('umum.galeri', compact('galeri'));
+}
+
 
     public function create()
     {
@@ -22,20 +28,29 @@ class GaleriController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'nama'   => 'required|string|max:255',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        $path = $request->file('gambar')->store('galeri', 'public');
+        // Ambil data dasar
+        $data = $request->only('nama');
 
-        Galeri::create([
-            'judul' => $request->judul,
-            'gambar' => $path,
-        ]);
+        // Kalau ada gambar yang diupload
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('images', 'public');
+            $data['gambar'] = $gambarPath;
+        } else {
+        $data['gambar'] = null; // <-- kasih nilai default
+    }
+
+        // Simpan ke database
+        Galeri::create($data);
 
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil ditambahkan.');
     }
+
 
     public function edit(Galeri $galeri)
     {
@@ -44,20 +59,28 @@ class GaleriController extends Controller
 
     public function update(Request $request, Galeri $galeri)
     {
+        // Validasi input
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama'   => 'required|string|max:255',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        $data = ['judul' => $request->judul];
+        // Ambil data dasar
+        $data = $request->only('nama');
 
+        // Jika ada gambar baru
         if ($request->hasFile('gambar')) {
-            if ($galeri->gambar) {
+            // Hapus gambar lama jika ada
+            if ($galeri->gambar && Storage::disk('public')->exists($galeri->gambar)) {
                 Storage::disk('public')->delete($galeri->gambar);
             }
-            $data['gambar'] = $request->file('gambar')->store('galeri', 'public');
+
+            // Upload gambar baru
+            $gambarPath = $request->file('gambar')->store('images', 'public');
+            $data['gambar'] = $gambarPath;
         }
 
+        // Update ke database
         $galeri->update($data);
 
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil diperbarui.');
