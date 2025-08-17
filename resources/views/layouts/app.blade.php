@@ -9,8 +9,13 @@
     <title>{{ config('app.name', 'SIM Masjid') }}</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon1.svg') }}">
 
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+
     {{-- style and javascript --}}
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+
     <script src="https://unpkg.com/alpinejs" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -36,7 +41,7 @@
             @endisset
 
             {{-- Page Content --}}
-            <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8">
+            <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8 ">
                 @yield('content')
             </main>
 
@@ -53,7 +58,16 @@
     </div>
 </body>
 
+<!-- AOS JS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
+    AOS.init({
+        duration: 800, // durasi animasi dalam ms
+        easing: 'ease-out', // tipe easing
+        once: true,
+        mirror: true
+    });
+
     document.addEventListener('alpine:init', () => {
         Alpine.data('countdown', (target) => ({
             targetDate: new Date(target).getTime(),

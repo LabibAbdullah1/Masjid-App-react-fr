@@ -4,7 +4,7 @@
 @section('title', 'Galeri Masjid')
 
 @section('content')
-    <div class="max-w-7xl mx-auto mt-10 p-4" x-data="{ showModal: false, modalImage: '', modalTitle: '' }">
+    <div class="max-w-7xl mx-auto mt-10 p-4" x-data="{ showModal: false, modalImage: '', modalTitle: '' } data-aos="fade-up"">
         <h1 class="text-3xl font-bold text-center text-green-700 mb-8">📸 Galeri Masjid</h1>
 
         @if ($galeri->count())

@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8" data-aos="fade-up">
         {{-- Header --}}
         <h1 class="text-3xl font-bold mb-2 text-center text-green-700">
             <i class="fas fa-money-bill-wave mr-2"></i> Kelola Transaksi
@@ -19,7 +19,7 @@
         </div>
 
         {{-- Navigasi Kategori --}}
-        <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0">
+        <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0" data-aos="fade-up" data-aos-delay="200">
             <ul class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0 items-center justify-center">
                 @foreach ($kategoriList as $kategori)
                     @php
@@ -40,7 +40,8 @@
         </nav>
 
         {{-- Ringkasan Keuangan --}}
-        <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600">
+        <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600" data-aos="fade-up"
+            data-aos-delay="200">
             <h2 class="text-lg font-semibold mb-3">Ringkasan Keuangan</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="p-3 bg-green-100 rounded">
@@ -77,7 +78,8 @@
         </div>
 
         {{-- Tabel Transaksi --}}
-        <div class="max-w-full bg-white shadow-lg rounded-lg overflow-x-auto border-2 border-green-600">
+        <div class="max-w-full bg-white shadow-lg rounded-lg overflow-x-auto border-2 border-green-600" data-aos="fade-up"
+            data-aos-delay="400">
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>

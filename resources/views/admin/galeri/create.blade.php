@@ -4,7 +4,7 @@
 @section('title', 'Tambah Galeri')
 
 @section('content')
-    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200" data-aos="fade-up">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Tambah Foto Galeri</h1>
 
         <form action="{{ route('admin.galeri.store') }}" method="POST" enctype="multipart/form-data">

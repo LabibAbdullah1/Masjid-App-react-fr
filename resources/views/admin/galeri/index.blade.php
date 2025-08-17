@@ -4,7 +4,7 @@
 @section('title', 'Galeri')
 
 @section('content')
-    <div class="max-w-7xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    <div class="max-w-7xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200" data-aos="fade-up">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-green-700">📸 Galeri Masjid</h1>
             <a href="{{ route('admin.galeri.create') }}"
@@ -22,9 +22,11 @@
 
         {{-- Grid Galeri --}}
         @if ($galeri->count())
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"data-aos="fade-up"
+                data-aos-delay="200">
                 @foreach ($galeri as $item)
-                    <div class="bg-white border rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+                    <div class="bg-white border rounded-xl shadow hover:shadow-lg transition overflow-hidden"
+                        data-aos="fade-up" data-aos-delay="400">
                         <div class="relative">
                             <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama }}"
                                 class="w-full h-48 object-cover">

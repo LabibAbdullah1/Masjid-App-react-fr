@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden sm:rounded-lg">
+    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden sm:rounded-lg" data-aos="fade-up">
         <div class="flex flex-col items-center justify-center mb-6">
             <h1 class="text-2xl font-bold text-green-700 dark:text-green-500 pt-5">Registrasi Akun</h1>
             <p class="text-sm text-center text-gray-500 dark:text-gray-400">Silahkan registrasi terlebih dahulu untuk

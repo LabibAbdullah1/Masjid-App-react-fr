@@ -3,7 +3,7 @@
 @section('title', 'Edit Data Anggota')
 
 @section('content')
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto" data-aos="fade-up">
         <!-- Alert jika validasi gagal -->
         @if ($errors->any())
             <div

@@ -3,7 +3,7 @@
 @section('title', 'Pesan & Saran')
 
 @section('content')
-    <div class="mx-auto px-4 py-8">
+    <div class="mx-auto px-4 py-8" data-aos="fade-up">
         <!-- Judul -->
         <h1 class="text-3xl font-bold mb-6 text-center text-green-700">
             Pesan dan Saran
@@ -27,7 +27,7 @@
             @endif
         </div>
 
-        {{-- pesan kiriman user umum --}}
+        {{-- pesan untuk umum --}}
         @if ($pesanAktif->count())
             @foreach ($pesanAktif as $pesan)
                 <div class="mb-6 p-4 border rounded-lg bg-gray-50">

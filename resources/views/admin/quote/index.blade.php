@@ -3,7 +3,7 @@
 @section('title', 'Daftar Quote Islami')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8" data-aos="fade-up">
         <h1 class="text-3xl font-bold mb-6 text-center text-green-700">
             📜 Daftar Quote Islami
         </h1>
@@ -17,7 +17,7 @@
         </div>
 
         <!-- Tabel -->
-        <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600">
+        <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600" data-aos="fade-up" data-aos-delay="200" >
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>

@@ -4,7 +4,7 @@
 @section('header-title', 'Tambah Anggota Baru')
 
 @section('content')
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto" data-aos="fade-up">
         {{-- Pesan Sukses --}}
         @if (session('success'))
             <div

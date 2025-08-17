@@ -1,6 +1,6 @@
 <x-guest-layout>
     {{-- Container utama dengan latar belakang dan bayangan --}}
-    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden rounded-lg">
+    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden rounded-lg" data-aos="fade-up">
 
         {{-- Header dengan logo masjid dan judul --}}
         <div class="flex flex-col items-center justify-center mb-6">

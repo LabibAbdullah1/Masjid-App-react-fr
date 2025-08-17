@@ -9,6 +9,9 @@
     <title>{{ config('app.name', 'SIM Masjid') }}</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('/favicon1.svg') }}">
 
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
     {{-- style and javascript --}}
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
@@ -16,19 +19,52 @@
 
 </head>
 
-<body class="font-sans text-gray-900 antialiased bg-cover bg-center bg-fixed bg-no-repeat"
-    style="background-image: url('{{ asset('images/masjid-bg.jpg') }}');">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-transparent">
-        <div>
-            <a href="/">
-                <x-application-logo class="w-40 h-40 fill-current text-gray-500" />
-            </a>
-        </div>
+<body class="bg-cover bg-center bg-fixed bg-no-repeat"
+    style="background-image: url('{{ asset('images/masjid-bg.jpg') }}'); font-sans antialiased min-h-screen text-gray-800 dark:text-gray-100 selection:bg-emerald-400 selection:text-white
+    transition-colors duration-500 ease-in-out">
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4">
-            {{ $slot }}
+    <div class="min-h-screen flex flex-col">
+
+        {{-- Sidebar & Navigation --}}
+        @include('layouts.navigation')
+
+        {{-- Wrapper Konten --}}
+        <div class="flex flex-col flex-1 sm:ml-64 mt-16 sm:mt-0">
+            {{-- Page Header --}}
+            @isset($header)
+                <header class="bg-gradient-to-r from-green-700 to-green-500 text-white shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
+
+            {{-- Page Content --}}
+            <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8 ">
+                @yield('content')
+            </main>
+
+            {{-- Footer --}}
+            <footer class="bg-green-700 text-white mt-8">
+                <div
+                    class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 sm:pl-[calc(1rem+16rem)] flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+                    <p class="text-sm">&copy; {{ date('Y') }} SIM Masjid. All rights reserved.</p>
+                    <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
+                </div>
+            </footer>
+
         </div>
     </div>
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // durasi animasi dalam ms
+            easing: 'ease-out', // tipe easing
+            once: true,
+            mirror: false
+        });
+    </script>
 </body>
 
 </html>

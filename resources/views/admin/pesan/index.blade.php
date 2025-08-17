@@ -3,7 +3,7 @@
 @section('title', 'Pesan & Saran Masuk')
 
 @section('content')
-    <div class="max-w-5xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
+    <div class="max-w-5xl mx-auto mt-10 bg-white p-6 rounded-lg shadow" data-aos="fade-up">
         <h2 class="text-3xl font-semibold text-gray-800 mb-4 text-center">Daftar Pesan & Saran</h2>
 
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition>
@@ -20,7 +20,7 @@
             @endif
         </div>
 
-        <table class="w-full border-collapse border border-gray-200">
+        <table class="w-full border-collapse border border-gray-200" >
             <thead>
                 <tr class="bg-gray-100 text-left">
                     <th class="border px-3 py-2">Pengirim</th>

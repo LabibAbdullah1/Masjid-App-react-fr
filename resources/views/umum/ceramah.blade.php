@@ -4,7 +4,7 @@
 @section('title', 'Jadwal Ceramah')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8" data-aos="fade-up">
         <!-- Judul -->
         <h1 class="text-3xl font-bold mb-6 text-center text-green-700">
             🕌 Jadwal Ceramah Masjid

@@ -4,7 +4,7 @@
 @section('title', 'Edit Galeri')
 
 @section('content')
-    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    <div class="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200" data-aos="fade-up">
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Edit Foto Galeri</h1>
 
         <form action="{{ route('galeri.update', $galeri->id) }}" method="POST" enctype="multipart/form-data">

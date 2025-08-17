@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
-        <div class="card shadow bg-white rounded-lg p-6">
+        <div class="card shadow bg-white rounded-lg p-6" data-aos="fade-up">
             <div class="card-body">
 
                 {{-- Header Dashboard --}}
@@ -12,8 +12,9 @@
                 </div>
 
                 {{-- Jadwal Sholat --}}
-                <div class="border border-green-200 rounded-lg shadow mb-8 p-6 bg-white">
-                    <div class="bg-green-600 text-white text-center py-6 rounded mb-6">
+                <div class="border border-green-200 rounded-lg shadow mb-8 p-6 bg-white" data-aos="fade-up"
+                    data-aos-delay="400">
+                    <div class="bg-green-600 text-white text-center py-6 px-3 rounded mb-6">
                         <h1 class="text-xl font-bold font-[Amiri]">Jadwal Sholat</h1>
                         <p class="text-md">{{ $jadwal['city'] ?? '-' }}, {{ $jadwal['country'] ?? '-' }}</p>
                         <p class="text-sm">
@@ -33,10 +34,10 @@
                                 'Isha' => 'bg-purple-50 text-purple-900 border-purple-200',
                             ];
                         @endphp
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:gird-cols-4 gap-4">
                             @foreach ($important as $name => $style)
                                 <div class="rounded-lg shadow p-4 text-center border {{ $style }}">
-                                    <h2 class="text-lg font-bold font-[Amiri]">{{ $name }}</h2>
+                                    <h2 class="text-lg font-bold font-sans">{{ $name }}</h2>
                                     <p class="text-2xl font-semibold mt-1">
                                         {{ $jadwal['timings'][$name] ?? '-' }}
                                     </p>
@@ -51,7 +52,8 @@
                 </div>
 
                 {{-- Inspirasi Harian --}}
-                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white">
+                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white" data-aos="fade-up"
+                    data-aos-delay="200">
                     <h2 class="text-xl font-bold text-green-700 font-[Amiri]">📖 Inspirasi Harian</h2>
                     @if ($quote)
                         <blockquote class="italic text-gray-600 mt-2 border-l-4 border-green-500 pl-4">
@@ -64,7 +66,8 @@
                 </div>
 
                 {{-- Ringkasan Kas Masjid --}}
-                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white">
+                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white" data-aos="fade-up"
+                    data-aos-delay="200">
                     <h2 class="text-xl font-bold text-green-700">💰 Ringkasan Kas Masjid</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         <div class="p-3 bg-green-50 rounded-lg text-center border border-green-200">
@@ -86,7 +89,8 @@
                 </div>
 
                 {{-- Jadwal Ceramah --}}
-                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white">
+                <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white" data-aos="fade-up"
+                    data-aos-delay="200">
                     <h2 class="text-xl font-bold text-green-700 font-[Amiri] flex items-center gap-2">
                         🗓 Jadwal Ceramah Bulan Ini
                     </h2>
@@ -128,7 +132,7 @@
                 </div>
 
                 {{-- Galeri --}}
-                <div class="border border-green-200 rounded-lg shadow p-4 bg-white">
+                <div class="border border-green-200 rounded-lg shadow p-4 bg-white" data-aos="fade-up" data-aos-delay="200">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @forelse ($galeri as $item)
                             <div class="overflow-hidden rounded-lg shadow border border-green-100">

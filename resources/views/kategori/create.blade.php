@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8 max-w-xl">
+    <div class="container mx-auto px-4 py-8 max-w-xl" data-aos="fade-up">
         <h1 class="text-3xl font-bold mb-6 text-center text-green-700">
             <i class="fas fa-plus-square mr-2"></i> Tambah Kategori Baru
         </h1>

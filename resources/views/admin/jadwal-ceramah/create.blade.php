@@ -4,7 +4,7 @@
 @section('title', 'Tambah Jadwal Ceramah')
 
 @section('content')
-    <div class="max-w-3xl mx-auto mt-8">
+    <div class="max-w-3xl mx-auto mt-8" data-aos="fade-up">
         <div class="bg-white shadow-xl rounded-xl p-6 border border-green-200">
             <h1 class="text-2xl font-bold text-green-800 mb-6">➕ Tambah Jadwal Ceramah</h1>
 
