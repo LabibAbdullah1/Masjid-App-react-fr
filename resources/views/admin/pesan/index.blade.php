@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="max-w-5xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Daftar Pesan & Saran</h2>
+        <h2 class="text-3xl font-semibold text-gray-800 mb-4 text-center">Daftar Pesan & Saran</h2>
 
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition>
             @if (session('success'))
@@ -33,18 +33,19 @@
                 @forelse ($pesanSaran as $pesan)
                     <tr>
                         <td class="border px-3 py-2">{{ $pesan->user->name }}</td>
-                        <td class="border px-3 py-2">{{ $pesan->pesan }}</td>
-                        <td class="border px-3 py-2">
+                        <td class="border px-3 py-2 break-words max-h-64 overflow-y-auto first-letter:uppercase">
+                            {{ $pesan->pesan }}</td>
+                        <td class="border px-3 py-2 break-words max-h-64 overflow-y-auto first-letter:uppercase">
                             @if ($pesan->feedback)
                                 <span class="text-green-600">{{ $pesan->feedback }}</span>
                                 <br>
-                                <small class="text-gray-500">Dibalas pada:
-                                    {{ \Carbon\Carbon::parse($pesan->dibalas_pada)->format('d M Y H:i') }}</small>
+                                <small class="text-gray-500">Dibalas
+                                    pada:{{ $pesan->dibalas_pada->format('d M Y H:i') }}</small>
                             @else
                                 <span class="text-red-500">Belum dibalas</span>
                             @endif
                         </td>
-                        <td class="border px-3 py-2 space-x-2">
+                        <td class="border px-3 py-2">
                             <a href="{{ route('admin.pesan.edit', $pesan->id) }}"
                                 class="text-blue-600 hover:underline">Balas</a>
                             <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" class="inline">

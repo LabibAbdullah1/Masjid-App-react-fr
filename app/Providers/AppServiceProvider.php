@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\Transaksi;
+use App\Models\PesanSaran;
 use App\Policies\TransaksiPolicy;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        view()->composer('*', function ($view) {
+        if (auth::check() && auth::user()->role === 'admin') {
+            $unreadCount = PesanSaran::whereNull('feedback')->count();
+            $view->with('unreadPesanCount', $unreadCount);
+        }
+    });
     }
 }

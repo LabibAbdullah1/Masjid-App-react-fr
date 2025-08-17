@@ -13,6 +13,7 @@ class PesanSaranController extends Controller
      */
     public function index()
     {
+        
         $pesanSaran = PesanSaran::with('user')
             ->latest()
             ->paginate(10);

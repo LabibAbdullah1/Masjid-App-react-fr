@@ -35,14 +35,23 @@
         </div>
 
         <!-- Menu Items -->
-        <div class="flex-1 overflow-y-auto py-4 space-y-1">
-            @foreach ($menuItems as $item)
-                <x-nav-link :href="route($item['route'])" :active="request()->routeIs($item['route'])"
-                    class="block w-full text-white px-4 py-2 hover:bg-green-700">
-                    {{ __($item['name']) }}
-                </x-nav-link>
-            @endforeach
-        </div>
+<div class="flex-1 overflow-y-auto py-4 space-y-1">
+    @foreach ($menuItems as $item)
+        <x-nav-link :href="route($item['route'])" :active="request()->routeIs($item['route'])"
+            class="block w-full text-white px-4 py-2 hover:bg-green-700 relative">
+            {{ __($item['name']) }}
+
+            {{-- Tambahin badge khusus menu Pesan --}}
+            @if ($item['name'] === 'Pesan' && isset($unreadPesanCount) && $unreadPesanCount > 0)
+                <span
+                    class="absolute top-1 right-3 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                    {{ $unreadPesanCount }}
+                </span>
+            @endif
+        </x-nav-link>
+    @endforeach
+</div>
+
 
         <!-- User Info -->
         <div class="border-t border-green-700 p-4">
