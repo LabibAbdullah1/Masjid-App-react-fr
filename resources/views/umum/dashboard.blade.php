@@ -87,21 +87,38 @@
 
                 {{-- Jadwal Ceramah --}}
                 <div class="border border-green-200 rounded-lg shadow p-4 mb-8 bg-white">
-                    <h2 class="text-xl font-bold text-green-700 font-[Amiri]">🗓 Jadwal Ceramah Bulan Ini</h2>
-                    <div class="mt-4">
+                    <h2 class="text-xl font-bold text-green-700 font-[Amiri] flex items-center gap-2">
+                        🗓 Jadwal Ceramah Bulan Ini
+                    </h2>
+
+                    <div class="mt-4 space-y-3">
                         @forelse ($jadwalCeramah as $jadwal)
-                            <div class="flex items-center space-x-4 p-3 mb-2 bg-green-50 rounded border border-green-200">
-                                <div class="flex-shrink-0 text-center">
-                                    <p class="text-xl font-bold text-green-600">
-                                        {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d') }}</p>
+                            <div
+                                class="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200 hover:shadow-md transition">
+
+                                <!-- Bagian Tanggal -->
+                                <div class="flex-shrink-0 text-center px-3">
+                                    <p class="text-2xl font-bold text-green-600 leading-none">
+                                        {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d') }}
+                                    </p>
                                     <p class="text-sm text-gray-500">
-                                        {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('M') }}</p>
+                                        {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('M') }}
+                                    </p>
                                 </div>
-                                <div>
+
+                                <!-- Bagian Informasi -->
+                                <div class="flex-1 ml-4">
                                     <p class="font-semibold text-gray-800">{{ $jadwal->judul }}</p>
                                     <p class="text-sm text-gray-600">Oleh: {{ $jadwal->penceramah }}</p>
                                     <p class="text-sm text-gray-500">
-                                        {{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }} WIB</p>
+                                        {{ \Carbon\Carbon::parse($jadwal->waktu)->format('H:i') }} WIB
+                                    </p>
+                                </div>
+
+                                <!-- Bagian Countdown -->
+                                <div class="text-center text-sm" x-data="countdown('{{ \Carbon\Carbon::parse($jadwal->tanggal . ' ' . $jadwal->waktu)->format('Y-m-d H:i:s') }}')" x-init="start()">
+                                    <p class="text-gray-500">Hitung Mundur</p>
+                                    <p class="text-green-700 font-bold" x-text="display"></p>
                                 </div>
                             </div>
                         @empty

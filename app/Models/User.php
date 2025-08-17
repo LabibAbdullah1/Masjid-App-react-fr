@@ -46,13 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    protected function IsAdmin()
+    public function pesanSaran()
     {
-        return $this->role === 'admin';
-    }
-    protected function IsMembar()
-    {
-        return $this->role === 'umum';
+        return $this->hasMany(PesanSaran::class);
     }
 }

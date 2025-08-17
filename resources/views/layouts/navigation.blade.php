@@ -5,8 +5,10 @@
         ['name' => 'Anggota', 'route' => 'admin.anggota.index'],
         ['name' => 'Keuangan', 'route' => 'transaksi.index'],
         ['name' => 'Kategori', 'route' => 'kategori.index'],
+        ['name' => 'Ceramah', 'route' => 'admin.jadwal-ceramah.index'],
         ['name' => 'Quotes', 'route' => 'admin.quote.index'],
         ['name' => 'Galeri', 'route' => 'admin.galeri.index'],
+        ['name' => 'Pesan', 'route' => 'admin.pesan.index'],
     ];
 
     // Definisikan menu untuk Pengguna Umum
@@ -14,6 +16,8 @@
         ['name' => 'Dashboard', 'route' => 'dashboard'],
         ['name' => 'Keuangan', 'route' => 'umum.transaksi'],
         ['name' => 'Galeri', 'route' => 'umum.galeri'],
+        ['name' => 'Ceramah', 'route' => 'umum.ceramah'],
+        ['name' => 'Kotak Pengaduan', 'route' => 'umum.pesan.create'],
     ];
 
     // Pilih menu sesuai role

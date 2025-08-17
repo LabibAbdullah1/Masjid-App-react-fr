@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PesanSaranController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\JadwalSholatController;
+use App\Http\Controllers\PesanSaranUmumController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Umum\UmumDashboardController;
 use App\Http\Controllers\Admin\JadwalCeramahController;
@@ -79,8 +81,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('quote/{quote}', [QuoteController::class, 'destroy'])->name('admin.quote.destroy');
 
 
-    //kelola jadwal ceramah
-    Route::resource('jadwal-ceramah', JadwalCeramahController::class);
+    // Kelola Jadwal Ceramah
+    Route::get('jadwal-ceramah', [JadwalCeramahController::class, 'index'])->name('admin.jadwal-ceramah.index');
+    Route::get('jadwal-ceramah/create', [JadwalCeramahController::class, 'create'])->name('admin.jadwal-ceramah.create');
+    Route::post('jadwal-ceramah', [JadwalCeramahController::class, 'store'])->name('admin.jadwal-ceramah.store');
+    Route::get('jadwal-ceramah/{jadwalCeramah}/edit', [JadwalCeramahController::class, 'edit'])->name('admin.jadwal-ceramah.edit');
+    Route::put('jadwal-ceramah/{jadwalCeramah}', [JadwalCeramahController::class, 'update'])->name('admin.jadwal-ceramah.update');
+    Route::delete('jadwal-ceramah/{jadwalCeramah}', [JadwalCeramahController::class, 'destroy'])->name('admin.jadwal-ceramah.destroy');
+
+    //kelola pesan dan feedback
+    Route::get('/pesan', [App\Http\Controllers\Admin\PesanSaranController::class, 'index'])->name('admin.pesan.index');
+    Route::get('/pesan/{id}/edit', [App\Http\Controllers\Admin\PesanSaranController::class, 'edit'])->name('admin.pesan.edit');
+    Route::put('/pesan/{id}', [App\Http\Controllers\Admin\PesanSaranController::class, 'update'])->name('admin.pesan.update');
+    Route::delete('/pesan/{id}', [App\Http\Controllers\Admin\PesanSaranController::class, 'destroy'])->name('admin.pesan.destroy');
+
 
     // Kelola kategori
     Route::resource('kategori', KategoriKeuanganController::class);
@@ -95,11 +109,20 @@ Route::get('/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.
 //jadwal sholat layer
 Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
 
+//jadwal ceramah
+Route::get('/ceramah', [JadwalCeramahController::class, 'ceramahUmum'])->name('umum.ceramah');
+
 // dashboar layer
 Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
 
 // Tampilan Galeri
 Route::get('/galeri', [GaleriController::class, 'public'])->name('umum.galeri');
+
+//kirim pesan
+Route::get('/pesan-saran', [PesanSaranUmumController::class, 'create'])->name('umum.pesan.create');
+Route::post('/pesan-saran', [PesanSaranUmumController::class, 'store'])->name('umum.pesan.store');
+Route::delete('/umum/pesan/{id}', [PesanSaranUmumController::class, 'destroy'])->name('umum.pesan.destroy');
+
 
 
 

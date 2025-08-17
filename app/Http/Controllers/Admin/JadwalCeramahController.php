@@ -14,6 +14,13 @@ class JadwalCeramahController extends Controller
         return view('admin.jadwal-ceramah.index', compact('jadwal'));
     }
 
+    public function ceramahUmum()
+    {
+    $jadwal = JadwalCeramah::orderBy('tanggal', 'asc')->paginate(10);
+    return view('umum.ceramah', compact('jadwal'));
+    }
+
+
     public function create()
     {
         return view('admin.jadwal-ceramah.create');
@@ -23,10 +30,9 @@ class JadwalCeramahController extends Controller
     {
         $request->validate([
             'penceramah' => 'required|string|max:255',
-            'tema' => 'required|string|max:255',
+            'judul' => 'required|string|max:255',
             'tanggal' => 'required|date',
             'waktu' => 'required',
-            'lokasi' => 'required|string|max:255',
         ]);
 
         JadwalCeramah::create($request->all());
@@ -43,10 +49,9 @@ class JadwalCeramahController extends Controller
     {
         $request->validate([
             'penceramah' => 'required|string|max:255',
-            'tema' => 'required|string|max:255',
+            'judul' => 'required|string|max:255',
             'tanggal' => 'required|date',
             'waktu' => 'required',
-            'lokasi' => 'required|string|max:255',
         ]);
 
         $jadwalCeramah->update($request->all());

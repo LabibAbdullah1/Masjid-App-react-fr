@@ -11,7 +11,7 @@
 
     {{-- style and javascript --}}
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
-    {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
+    <script src="https://unpkg.com/alpinejs" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -52,6 +52,39 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('countdown', (target) => ({
+            targetDate: new Date(target).getTime(),
+            display: '',
+            start() {
+                this.update();
+                setInterval(() => this.update(), 1000);
+            },
+            update() {
+                const now = new Date().getTime();
+                const distance = this.targetDate - now;
+
+                if (distance <= 0) {
+                    this.display = 'Selesai';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                this.display =
+                    (days > 0 ? days + 'h ' : '') +
+                    hours + 'j ' +
+                    minutes + 'm ' +
+                    seconds + 'd';
+            }
+        }))
+    })
+</script>
 
 
 
