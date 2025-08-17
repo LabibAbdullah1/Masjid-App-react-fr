@@ -61,6 +61,7 @@
 <!-- AOS JS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
+    //animasi fade up
     AOS.init({
         duration: 800, // durasi animasi dalam ms
         easing: 'ease-out', // tipe easing
@@ -68,6 +69,30 @@
         mirror: true
     });
 
+
+    // animasi countup  angka
+    function counter(target) {
+        return {
+            count: 0,
+            target: target,
+            start() {
+                const step = Math.ceil(this.target / 100); // penambahan tiap frame
+                const update = () => {
+                    if (this.count < this.target) {
+                        this.count += step;
+                        if (this.count > this.target) this.count = this.target;
+                        requestAnimationFrame(update);
+                    }
+                }
+                update();
+            },
+            displayCount() {
+                return this.count.toLocaleString(); // format ribuan
+            }
+        }
+    }
+
+    //animasi angka countdown
     document.addEventListener('alpine:init', () => {
         Alpine.data('countdown', (target) => ({
             targetDate: new Date(target).getTime(),

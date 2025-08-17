@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\KategoriKeuanganController;
 // HALAMAN UTAMA APP
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('utama');
 
 //RUTE LOGIN & REGISTER
 Route::get('/login', function () {

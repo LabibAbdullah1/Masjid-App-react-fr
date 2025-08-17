@@ -10,6 +10,9 @@
     {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- AOS CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
 </head>
 
 <body class="font-sans antialiased text-black bg-cover bg-center bg-fixed bg-no-repeat"
@@ -62,7 +65,8 @@
             <!-- End Navbar -->
 
             <!-- Hero Content -->
-            <div class="flex-1 flex flex-col justify-center items-center text-center px-6 fade-in-up">
+            <div class="flex-1 flex flex-col justify-center items-center text-center px-6 " data-aos="fade-up"
+                data-aos-delay="300">
                 <h2 class="text-4xl md:text-6xl font-extrabold mb-4 text-yellow-300 drop-shadow-lg">
                     Selamat Datang di Masjid Al-Falah
                 </h2>
@@ -70,7 +74,7 @@
                     Masjid Al-Falah adalah pusat ibadah, pembelajaran, dan kebersamaan umat Islam.
                     Bergabunglah dengan kami dalam kegiatan keagamaan dan sosial.
                 </p>
-                <div class="mt-6 flex gap-4">
+                <div class="mt-6 flex gap-4" data-aos="fade-up" data-aos-delay="500">
                     @auth
                         <!-- Kalau user sudah login -->
                         <a href="{{ route('dashboard') }}"
@@ -98,7 +102,7 @@
 
     <!-- Tentang -->
     <section id="tentang" class="bg-white/50 text-gray-800 py-16 px-6 md:px-16 fade-in-up">
-        <div class="max-w-5xl mx-auto text-center">
+        <div class="max-w-5xl mx-auto text-center" data-aos="fade-up">
             <h3 class="text-3xl font-bold mb-6 text-green-700">Tentang Masjid</h3>
             <p class="leading-relaxed">
                 Masjid Al-Falah telah berdiri sejak tahun 1980, menjadi pusat kegiatan keagamaan, sosial, dan pendidikan
@@ -111,7 +115,7 @@
 
     <!-- Kegiatan -->
     <section id="kegiatan" class="bg-green-50/50 py-16 px-6 md:px-16 fade-in-up ">
-        <div class="max-w-6xl mx-auto">
+        <div class="max-w-6xl mx-auto" data-aos="fade-up">
             <h3 class="text-3xl font-bold mb-8 text-green-700 text-center">Kegiatan Masjid</h3>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
@@ -132,10 +136,10 @@
 
     <!-- Kontak -->
     <section id="kontak" class="bg-white/50 text-gray-800 py-16 px-6 md:px-16 fade-in-up">
-        <div class="max-w-4xl mx-auto text-center">
+        <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
             <h3 class="text-3xl font-bold mb-6 text-green-700">Kontak</h3>
             <p class="mb-4">Hubungi kami untuk informasi lebih lanjut atau bergabung dalam kegiatan masjid.</p>
-            <a href="mailto:info@masjidalfalah.com"
+            <a href="mailto:labibabdullahhasan@gmail.com"
                 class="px-5 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition">
                 Email Kami
             </a>
@@ -145,8 +149,16 @@
     <footer class="bg-green-900 text-gray-200 py-6 text-center">
         &copy; {{ date('Y') }} Masjid Al-Falah. Semua Hak Dilindungi.
     </footer>
-
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
+        AOS.init({
+            duration: 800, // durasi animasi dalam ms
+            easing: 'ease-out', // tipe easing
+            once: true,
+            mirror: true
+        });
+
         const menuButton = document.getElementById('menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 

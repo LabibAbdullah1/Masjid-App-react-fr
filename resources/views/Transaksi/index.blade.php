@@ -42,24 +42,31 @@
         {{-- Ringkasan Keuangan --}}
         <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600" data-aos="fade-up"
             data-aos-delay="200">
+
             <h2 class="text-lg font-semibold mb-3">Ringkasan Keuangan</h2>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-3 bg-green-100 rounded">
+                <!-- Total Pemasukan -->
+                <div x-data="counter({{ $totalPemasukan }})" x-init="start()" class="p-3 bg-green-100 rounded">
                     <span class="block text-sm text-green-700">Total Pemasukan</span>
                     <span class="text-xl font-bold text-green-800">
-                        Rp {{ number_format($totalPemasukan, 0, ',', '.') }}
+                        Rp <span x-text="displayCount()"></span>
                     </span>
                 </div>
-                <div class="p-3 bg-red-100 rounded">
+
+                <!-- Total Pengeluaran -->
+                <div x-data="counter({{ $totalPengeluaran }})" x-init="start()" class="p-3 bg-red-100 rounded">
                     <span class="block text-sm text-red-700">Total Pengeluaran</span>
                     <span class="text-xl font-bold text-red-800">
-                        Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}
+                        Rp <span x-text="displayCount()"></span>
                     </span>
                 </div>
-                <div class="p-3 bg-blue-100 rounded">
+
+                <!-- Saldo -->
+                <div x-data="counter({{ $saldo }})" x-init="start()" class="p-3 bg-blue-100 rounded">
                     <span class="block text-sm text-blue-700">Saldo</span>
                     <span class="text-xl font-bold text-blue-800">
-                        Rp {{ number_format($saldo, 0, ',', '.') }}
+                        Rp <span x-text="displayCount()"></span>
                     </span>
                 </div>
             </div>
@@ -68,9 +75,9 @@
                 <h3 class="font-semibold">Total per Kategori</h3>
                 <ul class="list-disc pl-6">
                     @foreach ($totalPerKategori as $totalPerKat)
-                        <li>
+                        <li x-data="counter({{ $totalPerKat->total }})" x-init="start()">
                             {{ $totalPerKat->kategori ? $totalPerKat->kategori->nama_kategori : 'Tidak Ada Kategori' }}:
-                            Rp {{ number_format($totalPerKat->total, 0, ',', '.') }}
+                            Rp <span x-text="displayCount()"></span>
                         </li>
                     @endforeach
                 </ul>

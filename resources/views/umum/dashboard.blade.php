@@ -70,21 +70,34 @@
                     data-aos-delay="200">
                     <h2 class="text-xl font-bold text-green-700">💰 Ringkasan Kas Masjid</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                        <div class="p-3 bg-green-50 rounded-lg text-center border border-green-200">
+
+                        <!-- Total Pemasukan -->
+                        <div x-data="counter({{ $totalPemasukan }})" x-init="start()"
+                            class="p-3 bg-green-50 rounded-lg text-center border border-green-200">
                             <span class="block text-sm">Total Pemasukan</span>
-                            <span class="text-2xl text-green-500 font-bold ">Rp
-                                {{ number_format($totalPemasukan, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-green-500 font-bold">
+                                Rp <span x-text="displayCount()"></span>
+                            </span>
                         </div>
-                        <div class="p-3 bg-red-50 rounded-lg text-center border border-red-200">
+
+                        <!-- Total Pengeluaran -->
+                        <div x-data="counter({{ $totalPengeluaran }})" x-init="start()"
+                            class="p-3 bg-red-50 rounded-lg text-center border border-red-200">
                             <span class="block text-sm">Total Pengeluaran</span>
-                            <span class="text-2xl text-red-500 font-bold">Rp
-                                {{ number_format($totalPengeluaran, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-red-500 font-bold">
+                                Rp <span x-text="displayCount()"></span>
+                            </span>
                         </div>
-                        <div class="p-3 bg-blue-50 rounded-lg text-center border border-blue-200">
+
+                        <!-- Saldo Saat Ini -->
+                        <div x-data="counter({{ $saldo }})" x-init="start()"
+                            class="p-3 bg-blue-50 rounded-lg text-center border border-blue-200">
                             <span class="block text-sm">Saldo Saat Ini</span>
-                            <span class="text-2xl text-blue-500 font-bold">Rp
-                                {{ number_format($saldo, 0, ',', '.') }}</span>
+                            <span class="text-2xl text-blue-500 font-bold">
+                                Rp <span x-text="displayCount()"></span>
+                            </span>
                         </div>
+
                     </div>
                 </div>
 
