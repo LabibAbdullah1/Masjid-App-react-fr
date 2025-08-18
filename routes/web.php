@@ -50,9 +50,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/anggota', [UserController::class, 'index'])->name('admin.anggota.index');
     Route::get('/anggota/create', [UserController::class, 'create'])->name('admin.anggota.create');
     Route::post('/anggota', [UserController::class, 'store'])->name('admin.anggota.store');
-    Route::get('/anggota/{id}/edit', [UserController::class, 'edit'])->name('admin.anggota.edit');
-    Route::put('/anggota', [UserController::class, 'update'])->name('admin.anggota.update');
-    Route::delete('/anggota/{id}/delete', [UserController::class, 'delete'])->name('admin.anggota.delete');
+    Route::get('/anggota/{umums}/edit', [UserController::class, 'edit'])->name('admin.anggota.edit');
+    Route::put('/anggota/{umums}', [UserController::class, 'update'])->name('admin.anggota.update');
+    Route::delete('/anggota/{umums}/delete', [UserController::class, 'delete'])->name('admin.anggota.delete');
 
     //Kelelo Keuangan
     Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
@@ -67,8 +67,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/galeri', [GaleriController::class, 'index'])->name('admin.galeri.index');
     Route::get('/admin/galeri/create', [GaleriController::class, 'create'])->name('admin.galeri.create');
     Route::post('/admin/galeri', [GaleriController::class, 'store'])->name('admin.galeri.store');
-    Route::get('/admin/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('admin.galeri.edit');
-    Route::put('/admin/galeri/{id}', [GaleriController::class, 'update'])->name('admin.galeri.update');
+    Route::get('/admin/galeri/{galeri}/edit', [GaleriController::class, 'edit'])->name('admin.galeri.edit');
+    Route::put('/admin/galeri/{galeri}', [GaleriController::class, 'update'])->name('admin.galeri.update');
     Route::delete('/admin/galeri/{galeri}', [GaleriController::class, 'destroy'])->name('admin.galeri.destroy');
 
 

@@ -22,7 +22,8 @@
 
 <body class="bg-cover bg-center bg-fixed bg-no-repeat"
     style="background-image: url('{{ asset('images/masjid-bg.jpg') }}'); font-sans antialiased min-h-screen text-gray-800 dark:text-gray-100 selection:bg-emerald-400 selection:text-white
-    transition-colors duration-500 ease-in-out">
+    transition-colors duration-500 ease-in-out"
+    x-data="flashNotification()">
 
     <div class="min-h-screen flex flex-col">
 
@@ -56,6 +57,8 @@
 
         </div>
     </div>
+    {{-- Notifikasi Overlay --}}
+    @include('partials.notification')
 </body>
 
 <!-- AOS JS -->
@@ -123,6 +126,49 @@
             }
         }))
     })
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('notification', {
+            show: false,
+            message: '',
+            status: 'success', // 'success' atau 'error'
+
+            // Tampilkan notifikasi sukses
+            showSuccess(msg, autoHide = true, duration = 3000) {
+                this.message = msg;
+                this.status = 'success';
+                this.show = true;
+                if (autoHide) {
+                    setTimeout(() => this.hide(), duration);
+                }
+            },
+
+            // Tampilkan notifikasi error
+            showError(msg, autoHide = false, duration = 3000) {
+                this.message = msg;
+                this.status = 'error';
+                this.show = true;
+                if (autoHide) {
+                    setTimeout(() => this.hide(), duration);
+                }
+            },
+
+            // Tutup notifikasi
+            hide() {
+                this.show = false
+            }
+        });
+    });
+
+    document.addEventListener('alpine:init', () => {
+        @if (session('success'))
+            Alpine.store('notification').showSuccess("{{ session('success') }}");
+        @endif
+
+        @if (session('error'))
+            Alpine.store('notification').showError("{{ session('error') }}", false);
+        @endif
+    });
 </script>
 
 

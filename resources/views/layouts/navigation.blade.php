@@ -56,24 +56,24 @@
 
 
         <!-- User Info -->
-        <div class="border-t border-green-700 p-4">
-            <div class="font-medium">{{ Auth::user()->name }}</div>
-            <div class="text-sm text-yellow-200">{{ Auth::user()->email }}</div>
+            <div class="border-t border-green-700 p-4">
+                <div class="font-medium">{{ Auth::user()->name }}</div>
+                <div class="text-sm text-yellow-200">{{ Auth::user()->email }}</div>
 
-            <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')" @click="open = false">
-                {{ __('Kelola Profil') }}
-            </x-responsive-nav-link>
-
-
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <x-responsive-nav-link :href="route('logout')"
-                    onclick="event.preventDefault(); this.closest('form').submit(); open = false;">
-                    Log Out
+                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')" @click="open = false">
+                    {{ __('Kelola Profil') }}
                 </x-responsive-nav-link>
-            </form>
-        </div>
+
+
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-responsive-nav-link :href="route('logout')"
+                        onclick="event.preventDefault(); this.closest('form').submit(); open = false;">
+                        Log Out
+                    </x-responsive-nav-link>
+                </form>
+            </div>
     </aside>
 
     <!-- Mobile Topbar -->

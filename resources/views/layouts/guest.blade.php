@@ -22,39 +22,47 @@
 <body class="bg-cover bg-center bg-fixed bg-no-repeat"
     style="background-image: url('{{ asset('images/masjid-bg.jpg') }}'); font-sans antialiased min-h-screen text-gray-800 dark:text-gray-100 selection:bg-emerald-400 selection:text-white
     transition-colors duration-500 ease-in-out">
+    @guest
+        <main class="flex items-center justify-center min-h-screen">
+            <div class="mx-auto">
+                {{ $slot }}
+            </div>
+        </main>
+    @endguest
 
-    <div class="min-h-screen flex flex-col">
+    @auth
+        <div class="min-h-screen flex flex-col">
 
-        {{-- Sidebar & Navigation --}}
-        @include('layouts.navigation')
+            {{-- Sidebar & Navigation --}}
+            @include('layouts.navigation')
 
-        {{-- Wrapper Konten --}}
-        <div class="flex flex-col flex-1 sm:ml-64 mt-16 sm:mt-0">
-            {{-- Page Header --}}
-            @isset($header)
-                <header class="bg-gradient-to-r from-green-700 to-green-500 text-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+            {{-- Wrapper Konten --}}
+            <div class="flex flex-col flex-1 sm:ml-64 mt-16 sm:mt-0">
+                {{-- Page Header --}}
+                @isset($header)
+                    <header class="bg-gradient-to-r from-green-700 to-green-500 text-white shadow">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
+
+                {{-- Page Content --}}
+                <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8 ">
+                    @yield('content')
+                </main>
+
+                {{-- Footer --}}
+                <footer class="bg-green-700 text-white mt-8">
+                    <div
+                        class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 sm:pl-[calc(1rem+16rem)] flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+                        <p class="text-sm">&copy; {{ date('Y') }} SIM Masjid. All rights reserved.</p>
+                        <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
                     </div>
-                </header>
-            @endisset
-
-            {{-- Page Content --}}
-            <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8 ">
-                @yield('content')
-            </main>
-
-            {{-- Footer --}}
-            <footer class="bg-green-700 text-white mt-8">
-                <div
-                    class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 sm:pl-[calc(1rem+16rem)] flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
-                    <p class="text-sm">&copy; {{ date('Y') }} SIM Masjid. All rights reserved.</p>
-                    <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
-                </div>
-            </footer>
-
+                </footer>
+            </div>
         </div>
-    </div>
+    @endauth
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>

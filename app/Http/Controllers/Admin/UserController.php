@@ -35,7 +35,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('admin.umum.index')->with('success', 'Anggota berhasil ditambahkan.');
+        return redirect()->route('admin.anggota.index')->with('success', 'Anggota berhasil ditambahkan.');
     }
 
     public function show($id)
@@ -50,27 +50,36 @@ class UserController extends Controller
         return view('admin.anggota.edit', compact('umums'));
     }
 
-    public function update(Request $request, User $umums)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,'.$umums->id,
-            'password' => 'nullable|string|min:6|confirmed',
-        ]);
+public function update(Request $request, User $umums)
+{
+    // Validasi input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $umums->id,
+        'password' => 'nullable|string|min:6|confirmed',
+    ]);
 
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-        ];
+    // Data yang akan di-update
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+    ];
 
-        if ($request->filled('password')) {
-            $data['password'] = bcrypt($request->password);
-        }
-
-        $umums->update($data);
-
-        return redirect()->route('admin.anggota.index')->with('success', 'Data anggota diperbarui.');
+    // Update password jika diisi
+    if ($request->filled('password')) {
+        $data['password'] = bcrypt($request->password);
     }
+
+    // Cek hasil update
+    $updated = $umums->update($data);
+
+    if ($updated) {
+        return redirect()->route('admin.anggota.index')->with('success', 'Data anggota diperbarui.');
+    } else {
+        return redirect()->route('admin.anggota.index')->with('error', 'Gagal memperbarui data anggota.');
+    }
+}
+
 
     public function destroy(User $umums)
     {
