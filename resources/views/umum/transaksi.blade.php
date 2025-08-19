@@ -12,7 +12,7 @@
         </p>
 
         {{-- Navigasi Kategori --}}
-        <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0" data-aos="fade-up" data-aos-delay="200">
+        <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0">
             <ul class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0 items-center justify-center">
                 @foreach ($kategoriList as $kategori)
                     @php
@@ -71,7 +71,7 @@
 
         {{-- Tabel Data --}}
         <div class="max-w-full bg-white shadow-lg rounded-lg overflow-x-auto border-2 border-green-600" data-aos="fade-up"
-            data-aos-delay="400">
+            data-aos-delay="200">
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>

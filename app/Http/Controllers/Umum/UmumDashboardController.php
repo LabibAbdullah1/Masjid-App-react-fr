@@ -48,7 +48,7 @@ class UmumDashboardController extends Controller
 
         // Ambil beberapa item galeri terbaru (contoh: 4 foto)
         $galeri = Galeri::latest()->take(4)->get();
-        return view('umum.dashboard', compact(
+        return view('dashboard', compact(
             'jadwal',
             'totalPemasukan',
             'totalPengeluaran',

@@ -29,9 +29,11 @@ Route::get('/register', function () {
 })->name('register');
 
 // DASHBOARD Perkondisian
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'role:admin,umum'])->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
 });
+
 
 
 // Profile untuk Admin dan umum
@@ -103,25 +105,27 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // ----------------- //
 // route khusus umum
 // ----------------- //
-//transaksi leyer
-Route::get('/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
+    //jadwal sholat layer
+    Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
+        // dashboar layer
+    Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
 
-//jadwal sholat layer
-Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
+Route::middleware(['auth', 'role:umum'])->group(function () {
 
-//jadwal ceramah
-Route::get('/ceramah', [JadwalCeramahController::class, 'ceramahUmum'])->name('umum.ceramah');
+    //transaksi leyer
+    Route::get('/transaksi', [TransaksiController::class, 'umumindex'])->name('umum.transaksi');
 
-// dashboar layer
-Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
+    //jadwal ceramah
+    Route::get('/ceramah', [JadwalCeramahController::class, 'ceramahUmum'])->name('umum.ceramah');
 
-// Tampilan Galeri
-Route::get('/galeri', [GaleriController::class, 'public'])->name('umum.galeri');
+    // Tampilan Galeri
+    Route::get('/galeri', [GaleriController::class, 'public'])->name('umum.galeri');
 
-//kirim pesan
-Route::get('/pesan-saran', [PesanSaranUmumController::class, 'create'])->name('umum.pesan.create');
-Route::post('/pesan-saran', [PesanSaranUmumController::class, 'store'])->name('umum.pesan.store');
-Route::delete('/umum/pesan/{id}', [PesanSaranUmumController::class, 'destroy'])->name('umum.pesan.destroy');
+    //kirim pesan
+    Route::get('/pesan-saran', [PesanSaranUmumController::class, 'create'])->name('umum.pesan.create');
+    Route::post('/pesan-saran', [PesanSaranUmumController::class, 'store'])->name('umum.pesan.store');
+    Route::delete('/umum/pesan/{id}', [PesanSaranUmumController::class, 'destroy'])->name('umum.pesan.destroy');
+});
 
 
 

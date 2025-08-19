@@ -17,13 +17,6 @@
             </a>
         </div>
 
-        <!-- Alert Success -->
-        @if (session('success'))
-            <div class="mb-4 p-3 rounded bg-green-100 text-green-800">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <!-- Tabel -->
         <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600" data-aos="fade-up"
             data-aos-delay="200">

@@ -12,8 +12,8 @@
 
         <div class="space-y-6">
             @forelse ($jadwal as $jad)
-                <div
-                    class="bg-white shadow-lg rounded-xl border border-green-600 p-6 flex flex-col sm:flex-row sm:items-center justify-between">
+                <div class="bg-white shadow-lg rounded-xl border border-green-600 p-6 flex flex-col sm:flex-row sm:items-center justify-between"
+                    data-aos="fade-up">
 
                     <!-- Info Ceramah -->
                     <div>
@@ -41,18 +41,17 @@
                         <p class="text-green-700 font-bold" x-text="display"></p>
                     </div>
                 </div>
+            @empty
+                <div class="text-center text-gray-500">
+                    Belum ada jadwal ceramah yang tersedia.
+                </div>
+            @endforelse
         </div>
-    @empty
-        <div class="text-center text-gray-500">
-            Belum ada jadwal ceramah yang tersedia.
-        </div>
-        @endforelse
-    </div>
 
-    <!-- Pagination -->
-    <div class="mt-6">
-        {{ $jadwal->links() }}
-    </div>
+        <!-- Pagination -->
+        <div class="mt-6">
+            {{ $jadwal->links() }}
+        </div>
     </div>
 
 

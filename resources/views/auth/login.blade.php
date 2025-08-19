@@ -1,6 +1,7 @@
 <x-guest-layout>
     {{-- Container utama dengan latar belakang dan bayangan --}}
-    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden rounded-lg" data-aos="fade-up">
+    <div class="w-full sm:max-w-md px-6 py-4 bg-white dark:bg-gray-900 shadow-xl overflow-hidden rounded-lg"
+        data-aos="fade-up">
 
         {{-- Header dengan logo masjid dan judul --}}
         <div class="flex flex-col items-center justify-center mb-6">
@@ -69,10 +70,14 @@
             </div>
 
             <div class="flex items-center justify-between mt-4">
+                <a class="underline text-sm text-green-600 hover:text-green-900 rounded-md focus:outline-none"
+                    href="{{ route('register') }}">
+                    {{ __('Belum punya akun?') }}
+                </a>
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-green-600 hover:text-green-900 rounded-md focus:outline-none"
                         href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                        {{ __('Lupa password?') }}
                     </a>
                 @endif
 

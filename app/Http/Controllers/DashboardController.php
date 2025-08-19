@@ -12,20 +12,8 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if($user->role === 'admin'){
-            return view('admin.dashboard');
+            return view('dashboard');
         }
-            return view('umum.dashboard');
+            return view('dashboard');
     }
-
-    public function admin()
-    {
-        return view('dashboard.admin');
-    }
-
-    public function umum()
-    {
-        return view('dashboard.umum');
-    }
-
-
 }

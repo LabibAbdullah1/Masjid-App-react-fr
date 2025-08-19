@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <label class="block font-medium text-gray-700">Tema</label>
-                    <input type="text" name="tema" value="{{ old('judul', $jadwalCeramah->judul) }}"
+                    <input type="text" name="judul" value="{{ old('judul', $jadwalCeramah->judul) }}"
                         class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-green-400">
                 </div>
                 <div>

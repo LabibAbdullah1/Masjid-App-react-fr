@@ -10,23 +10,7 @@
         </h1>
         <p class=" text-center">Berikan Kritik dan Saran kepada Kami Untuk menjadi pelayanan Masjid yang lebih baik</p>
     </div>
-    <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
-
-        {{-- Notifikasi sukses / error --}}
-        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition>
-            @if (session('success'))
-                <div class="mb-4 p-4 rounded-lg bg-green-100 text-green-800 border border-green-300">
-                    ✅ {{ session('success') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="mb-4 p-4 rounded-lg bg-red-100 text-red-800 border border-red-300">
-                    ❌ {{ session('error') }}
-                </div>
-            @endif
-        </div>
-
+    <div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-lg shadow" data-aos="fade-up" data-aos-delay="200">
         {{-- pesan untuk umum --}}
         @if ($pesanAktif->count())
             @foreach ($pesanAktif as $pesan)
