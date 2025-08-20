@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 
 class JadwalSholatController extends Controller
 {
+    // API untuk jadwal sholat
     public function getJadwal($city = 'Pekanbaru', $country = 'Indonesia')
     {
         try {

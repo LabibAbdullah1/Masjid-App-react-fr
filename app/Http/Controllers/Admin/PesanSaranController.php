@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 
 class PesanSaranController extends Controller
 {
-    /**
-     * Halaman index admin untuk melihat semua pesan.
-     */
+
+     // Halaman index admin untuk melihat semua pesan.
+
     public function index()
     {
-        
+
         $pesanSaran = PesanSaran::with('user')
             ->latest()
             ->paginate(10);
@@ -21,18 +21,18 @@ class PesanSaranController extends Controller
         return view('admin.pesan.index', compact('pesanSaran'));
     }
 
-    /**
-     * Form balas pesan (admin).
-     */
+
+     // Form balas pesan (admin).
+
     public function edit($id)
     {
         $pesan = PesanSaran::findOrFail($id);
         return view('admin.pesan.edit', compact('pesan'));
     }
 
-    /**
-     * Update balasan admin.
-     */
+
+     //Update balasan admin.
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -50,9 +50,8 @@ class PesanSaranController extends Controller
             ->with('success', 'Balasan berhasil dikirim.');
     }
 
-    /**
-     * Hapus pesan (admin).
-     */
+
+     // Hapus pesan (admin).
     public function destroy($id)
     {
         $pesan = PesanSaran::findOrFail($id);

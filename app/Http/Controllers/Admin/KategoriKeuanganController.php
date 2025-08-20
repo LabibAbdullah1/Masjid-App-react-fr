@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class KategoriKeuanganController extends Controller
 {
-    /**
-     * Tampilkan daftar semua kategori.
-     */
+
+     // Tampilkan daftar semua kategori.
+
     public function index()
     {
         // Ambil semua kategori
@@ -19,17 +19,17 @@ class KategoriKeuanganController extends Controller
         return view('kategori.index', compact('kategoris'));
     }
 
-    /**
-     * Form tambah kategori baru.
-     */
+
+     // Form tambah kategori baru.
+
     public function create()
     {
         return view('kategori.create');
     }
 
-    /**
-     * Simpan kategori baru ke database.
-     */
+
+     // Simpan kategori baru ke database.
+
     public function store(Request $request)
     {
         $request->validate([
@@ -43,18 +43,18 @@ class KategoriKeuanganController extends Controller
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
     }
 
-    /**
-     * Form edit kategori.
-     */
+
+     // Form edit kategori.
+
     public function edit($id)
     {
         $kategori = KategoriKeuangan::findOrFail($id);
         return view('kategori.edit', compact('kategori'));
     }
 
-    /**
-     * Update kategori.
-     */
+
+     // Update kategori.
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -69,9 +69,9 @@ class KategoriKeuanganController extends Controller
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
-    /**
-     * Hapus kategori.
-     */
+
+     // Hapus kategori.
+
     public function destroy($id)
     {
         $kategori = KategoriKeuangan::findOrFail($id);

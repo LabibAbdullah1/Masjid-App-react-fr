@@ -80,7 +80,6 @@ public function update(Request $request, User $umums)
     }
 }
 
-
     public function destroy(User $umums)
     {
         $umums->delete();

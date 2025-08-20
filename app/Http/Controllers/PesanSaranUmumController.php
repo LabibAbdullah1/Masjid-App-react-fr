@@ -8,10 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PesanSaranUmumController extends Controller
 {
-    /**
-     * Halaman create untuk user umum.
-     * Tampilkan pesan terakhir user yang masih aktif (belum dibalas atau < 1 hari sejak dibalas).
-     */
+    // Halaman create untuk user umum.
     public function create()
     {
         $pesanAktif = PesanSaran::where('user_id', Auth::id())
@@ -22,9 +19,7 @@ class PesanSaranUmumController extends Controller
         return view('umum.pesan', compact('pesanAktif'));
     }
 
-    /**
-     * Simpan pesan baru dari user umum.
-     */
+    // Simpan pesan baru dari user umum.
     public function store(Request $request)
     {
         $request->validate([
@@ -45,10 +40,12 @@ class PesanSaranUmumController extends Controller
         return redirect()->route('umum.pesan.create')
             ->with('success', 'Pesan berhasil dikirim.');
     }
+    
+    // untuk menghapus pesan sendiri
     public function destroy($id)
-{
+    {
     $pesan = PesanSaran::where('id', $id)
-        ->where('user_id', Auth::id()) // pastikan hanya bisa hapus pesan sendiri
+        ->where('user_id', Auth::id())
         ->firstOrFail();
 
     $pesan->delete();

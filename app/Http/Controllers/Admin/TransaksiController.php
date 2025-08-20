@@ -10,39 +10,31 @@ use App\Http\Controllers\Controller;
 
 class TransaksiController extends Controller
 {
-
+    // untuk admin
     public function index(Request $request)
     {
-        // 1. Ambil ID kategori dari URL. Jika tidak ada, gunakan nilai default 'semua'.
         $kategoriId = $request->input('kategori_id');
 
-        // 2. Mulai kueri Transaksi
         $query = Transaksi::query();
 
-        // 3. Terapkan filter kategori jika kategoriId ada dan bukan 'semua'
         if ($kategoriId && $kategoriId != 'semua') {
             $query->where('kategori_id', $kategoriId);
         }
 
-        // 4. Hitung total pemasukan, pengeluaran, dan saldo dari kueri yang sudah difilter
         $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
         $totalPengeluaran = (clone $query)->where('jenis', 'Pengeluaran')->sum('jumlah');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
-        // 5. Ambil data transaksi yang sudah difilter dan di-paginate
         $transaksis = (clone $query)->with('kategori')->latest()->paginate(10);
 
-        // 6. Ambil semua kategori untuk tombol filter di view
-        $kategoriList = KategoriKeuangan::all(); // Pastikan ini model yang benar
+        $kategoriList = KategoriKeuangan::all();
 
-        // 7. Hitung total per kategori
         $totalPerKategori = Transaksi::select('kategori_id', DB::raw('SUM(jumlah) as total'))
             ->with('kategori')
             ->groupBy('kategori_id')
             ->orderByDesc('total')
             ->get();
 
-        // 8. Kirim semua data ke view
         return view('transaksi.index', compact(
             'transaksis',
             'kategoriList',
@@ -54,28 +46,25 @@ class TransaksiController extends Controller
         ));
     }
 
-
-        public function umumindex(Request $request)
+    // untuk tampilan ke umum
+    public function umumindex(Request $request)
     {
-        // Get the category ID from the URL, if it exists.
         $kategoriId = $request->input('kategori_id');
 
-        // Base query for all transactions.
         $query = Transaksi::query();
 
-        // If a category ID is present, filter the query.
         if ($kategoriId) {
             $query->where('kategori_id', $kategoriId);
         }
-                // Jika ada kategori_id, filter transaksinya
+
         if ($kategoriId) {
             $transaksiss = Transaksi::where('kategori_id', $kategoriId)->get();
         } else {
-            // Jika tidak ada kategori_id, tampilkan semua transaksi
+
             $transaksiss = Transaksi::where('kategori_id' ,1)->get();
         }
         $kategoriList = KategoriKeuangan::all();
-        $activeKategoriName = 'Semua Kategori'; // Default
+        $activeKategoriName = 'Semua Kategori';
         if ($kategoriId) {
             $activeKategori = $kategoriList->firstWhere('id', $kategoriId);
             if ($activeKategori) {
@@ -83,18 +72,15 @@ class TransaksiController extends Controller
             }
         }
 
-        // Calculate totals based on the filtered query.
+
         $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
         $totalPengeluaran = (clone $query)->where('jenis', 'Pengeluaran')->sum('jumlah');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
-        // Fetch paginated and filtered transactions.
         $transaksis = (clone $query)->with('kategori')->latest()->paginate(10);
 
-        // Fetch all categories for the filter buttons in the view.
         $kategoriList = KategoriKeuangan::all();
 
-        // Calculate total per category.
         $totalPerKategori = Transaksi::select('kategori_id', DB::raw('SUM(jumlah) as total'))
             ->with('kategori')
             ->groupBy('kategori_id')
@@ -113,9 +99,8 @@ class TransaksiController extends Controller
             'totalPerKategori'
         ));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
+    // buat data kauangan
     public function create()
     {
         $kategoriKeuangan = KategoriKeuangan::all();
@@ -123,9 +108,7 @@ class TransaksiController extends Controller
         return view('transaksi.create', compact('kategoriKeuangan'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // simpan data keuangan
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -142,9 +125,7 @@ class TransaksiController extends Controller
             ->with('success', 'Transaksi berhasil ditambahkan.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // edit data keuangan
     public function edit(Transaksi $transaksi)
     {
         $kategoriKeuangan = KategoriKeuangan::all();
@@ -152,9 +133,7 @@ class TransaksiController extends Controller
         return view('transaksi.edit', compact('transaksi', 'kategoriKeuangan'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // update data kuangan
     public function update(Request $request, Transaksi $transaksi)
     {
         $validatedData = $request->validate([
@@ -171,9 +150,7 @@ class TransaksiController extends Controller
             ->with('success', 'Transaksi berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //hapus data keuangan
     public function destroy(Transaksi $transaksi)
     {
         $transaksi->delete();

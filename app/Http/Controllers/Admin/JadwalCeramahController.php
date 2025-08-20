@@ -14,12 +14,12 @@ class JadwalCeramahController extends Controller
         return view('admin.jadwal-ceramah.index', compact('jadwal'));
     }
 
+    //untuk umum
     public function ceramahUmum()
     {
     $jadwal = JadwalCeramah::orderBy('tanggal', 'asc')->paginate(10);
     return view('umum.ceramah', compact('jadwal'));
     }
-
 
     public function create()
     {

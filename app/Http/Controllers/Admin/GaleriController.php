@@ -9,23 +9,27 @@ use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
 {
+    // untuk admin
     public function index()
     {
         $galeri = Galeri::latest()->paginate(10);
         return view('admin.galeri.index', compact('galeri'));
     }
+
+    //untuk umum
     public function public()
-{
-    $galeri = Galeri::latest()->paginate(20);
-    return view('umum.galeri', compact('galeri'));
-}
+    {
+        $galeri = Galeri::latest()->paginate(20);
+        return view('umum.galeri', compact('galeri'));
+    }
 
-
+    // buat Galeri
     public function create()
     {
         return view('admin.galeri.create');
     }
 
+    //simpan galeri
     public function store(Request $request)
     {
         // Validasi
@@ -51,12 +55,13 @@ class GaleriController extends Controller
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil ditambahkan.');
     }
 
-
+    //edit galeri
     public function edit(Galeri $galeri)
     {
         return view('admin.galeri.edit', compact('galeri'));
     }
 
+    // update galeri
     public function update(Request $request, Galeri $galeri)
     {
         // Validasi input
@@ -86,6 +91,7 @@ class GaleriController extends Controller
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil diperbarui.');
     }
 
+    // hapus galeri
     public function destroy(Galeri $galeri)
     {
         if ($galeri->gambar) {
