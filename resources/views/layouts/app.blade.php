@@ -64,14 +64,41 @@
 <!-- AOS JS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
-    //animasi fade up
-    AOS.init({
-        duration: 800, // durasi animasi dalam ms
-        easing: 'ease-out', // tipe easing
-        once: true,
-        mirror: true
+    document.addEventListener("DOMContentLoaded", function() {
+        // Kunci unik per halaman (berdasarkan URL path)
+        const pageKey = "aosPlayed_" + window.location.pathname;
+
+        // Cek apakah di halaman ini AOS sudah pernah dijalankan
+        if (sessionStorage.getItem(pageKey)) {
+            // Jika sudah, hapus semua animasi AOS
+            document.querySelectorAll("[data-aos]").forEach(function(el) {
+                el.removeAttribute("data-aos");
+            });
+        } else {
+            // Jika belum → jalankan AOS
+            AOS.init({
+                once: true,
+                duration: 800,
+                easing: "ease-in-out",
+            });
+
+            // Simpan status AOS untuk halaman ini
+            sessionStorage.setItem(pageKey, "true");
+        }
     });
 
+    // Reset AOS ketika pindah halaman
+    document.addEventListener("click", function(e) {
+        const link = e.target.closest("a");
+        if (link && link.href && link.origin === window.location.origin) {
+            // Hanya reset ketika pindah halaman internal, bukan refresh
+            Object.keys(sessionStorage).forEach(function(key) {
+                if (key.startsWith("aosPlayed_")) {
+                    sessionStorage.removeItem(key);
+                }
+            });
+        }
+    });
 
     // animasi countup  angka
     function counter(target) {

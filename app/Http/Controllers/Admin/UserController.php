@@ -8,12 +8,23 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $umums = User::where('role', 'umum')->paginate(10);
+    public function index(Request $request)
+{
+    $search = $request->input('search');
 
-        return view('admin.anggota.index', compact('umums'));
-    }
+    $umums = User::where('role', 'umum')
+        ->when($search, function ($query) use ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        })
+        ->orderBy('name', 'asc')
+        ->paginate(10);
+
+    $totalAnggota = User::where('role', 'umum')->count();
+
+    return view('admin.anggota.index', compact('umums', 'totalAnggota'));
+}
+
+
 
     public function create()
     {

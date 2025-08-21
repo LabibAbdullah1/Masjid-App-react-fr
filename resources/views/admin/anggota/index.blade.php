@@ -8,6 +8,27 @@
             <i class="fas fa-users mr-2"></i> Manajemen Anggota
         </h1>
 
+        <!-- Statistik Anggota -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-3">
+            <div
+                class="bg-green-100 border-l-4 border-green-600 text-green-700 p-3 rounded-lg shadow-md w-full md:w-1/3 text-center">
+                <span class="text-lg font-semibold">Total Anggota :</span>
+                <span class="font-bold text-green-800">{{ $totalAnggota }}</span>
+            </div>
+
+            <!-- Form Pencarian -->
+            <form action="{{ route('admin.anggota.index') }}" method="GET" class="flex items-center gap-2 w-full md:w-1/3">
+                <input type="text" name="search" value="{{ request('search') }}"
+                    placeholder="Cari anggota berdasarkan nama..."
+                    class="w-full px-4 py-2 border border-green-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <button type="submit"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200 shadow-md">
+                    Cari
+                </button>
+            </form>
+        </div>
+
+        <!-- Tombol Tambah Anggota -->
         <div class="flex justify-end mb-4">
             <a href="{{ route('admin.anggota.create') }}"
                 class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
@@ -15,6 +36,7 @@
             </a>
         </div>
 
+        <!-- Tabel Anggota -->
         <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600" data-aos="fade-up"
             data-aos-delay="200">
             <table class="min-w-full leading-normal">
@@ -22,20 +44,16 @@
                     <tr>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            No
-                        </th>
+                            No</th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Nama
-                        </th>
+                            Nama</th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Email
-                        </th>
+                            Email</th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-center text-sm font-semibold uppercase tracking-wider">
-                            Aksi
-                        </th>
+                            Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,7 +99,7 @@
 
         <!-- Pagination -->
         <div class="mt-6">
-            {{ $umums->links() }}
+            {{ $umums->appends(['search' => request('search')])->links() }}
         </div>
     </div>
 @endsection

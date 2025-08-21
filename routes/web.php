@@ -96,6 +96,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/pesan/{id}/edit', [App\Http\Controllers\Admin\PesanSaranController::class, 'edit'])->name('admin.pesan.edit');
     Route::put('/pesan/{id}', [App\Http\Controllers\Admin\PesanSaranController::class, 'update'])->name('admin.pesan.update');
     Route::delete('/pesan/{id}', [App\Http\Controllers\Admin\PesanSaranController::class, 'destroy'])->name('admin.pesan.destroy');
+    Route::delete('/pesan', [PesanSaranController::class, 'bulkDelete'])->name('admin.pesan.bulkDelete');
 
 
     // Kelola kategori

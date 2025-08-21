@@ -23,7 +23,6 @@ class PesanSaranController extends Controller
 
 
      // Form balas pesan (admin).
-
     public function edit($id)
     {
         $pesan = PesanSaran::findOrFail($id);
@@ -32,7 +31,6 @@ class PesanSaranController extends Controller
 
 
      //Update balasan admin.
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -59,5 +57,19 @@ class PesanSaranController extends Controller
 
         return redirect()->route('admin.pesan.index')
             ->with('success', 'Pesan berhasil dihapus.');
+    }
+
+    // Hapus banyak pesan sekaligus
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids'); // selector buat checkbox nantinya
+
+        if (!$ids || count($ids) === 0) {
+            return back()->with('error', 'Tidak ada pesan yang dipilih.');
+        }
+
+        PesanSaran::whereIn('id', $ids)->delete();
+
+        return back()->with('success', count($ids).' pesan berhasil dihapus.');
     }
 }
