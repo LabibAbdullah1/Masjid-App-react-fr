@@ -13,19 +13,14 @@
             <div
                 class="bg-green-100 border-l-4 border-green-600 text-green-700 p-3 rounded-lg shadow-md w-full md:w-1/3 text-center">
                 <span class="text-lg font-semibold">Total Anggota :</span>
-                <span class="font-bold text-green-800">{{ $totalAnggota }}</span>
+                <span class="font-bold text-green-800" id="total-anggota">{{ $totalAnggota }}</span>
             </div>
 
             <!-- Form Pencarian -->
-            <form action="{{ route('admin.anggota.index') }}" method="GET" class="flex items-center gap-2 w-full md:w-1/3">
-                <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="Cari anggota berdasarkan nama..."
+            <div class="flex items-center gap-2 w-full md:w-1/3">
+                <input type="text" id="search" placeholder="Cari anggota berdasarkan nama..."
                     class="w-full px-4 py-2 border border-green-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                <button type="submit"
-                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition duration-200 shadow-md">
-                    Cari
-                </button>
-            </form>
+            </div>
         </div>
 
         <!-- Tombol Tambah Anggota -->
@@ -56,7 +51,7 @@
                             Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="anggota-table">
                     @forelse ($umums as $umum)
                         <tr class="hover:bg-green-50 transition duration-150">
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -98,8 +93,75 @@
         </div>
 
         <!-- Pagination -->
-        <div class="mt-6">
-            {{ $umums->appends(['search' => request('search')])->links() }}
+        <div class="mt-6" id="pagination-links">
+            {{ $umums->links() }}
         </div>
     </div>
+
+    <!-- Live Search AJAX -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search');
+            const anggotaTable = document.getElementById('anggota-table');
+            const totalAnggota = document.getElementById('total-anggota');
+
+            searchInput.addEventListener('keyup', function() {
+                const keyword = this.value;
+
+                fetch(`{{ route('admin.anggota.index') }}?search=${keyword}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        anggotaTable.innerHTML = '';
+                        if (data.length > 0) {
+                            data.forEach((item, index) => {
+                                anggotaTable.innerHTML += `
+                        <tr class="hover:bg-green-50 transition duration-150">
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                ${index + 1}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                ${item.name}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                ${item.email}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
+                                <div class="flex justify-center space-x-2">
+                                    <a href="/admin/anggota/${item.id}/edit"
+                                        class="text-yellow-600 hover:text-yellow-800 transition duration-150">
+                                        Edit
+                                    </a>
+                                    <form action="/admin/anggota/${item.id}" method="POST"
+                                        onsubmit="return confirm('Yakin ingin menghapus anggota ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="text-red-600 hover:text-red-800 transition duration-150">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>`;
+                            });
+                        } else {
+                            anggotaTable.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-5 py-5 text-center text-gray-500">
+                            Tidak ada anggota ditemukan.
+                        </td>
+                    </tr>
+                `;
+                        }
+
+                        // Update jumlah total anggota sesuai hasil search
+                        totalAnggota.textContent = data.length;
+                    });
+            });
+        });
+    </script>
 @endsection

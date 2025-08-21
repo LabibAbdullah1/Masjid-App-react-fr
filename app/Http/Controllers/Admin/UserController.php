@@ -9,21 +9,30 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    $umums = User::where('role', 'umum')
-        ->when($search, function ($query) use ($search) {
-            $query->where('name', 'like', "%{$search}%");
-        })
-        ->orderBy('name', 'asc')
-        ->paginate(10);
+        // Ambil semua anggota umum default
+        $umums = User::where('role', 'umum')
+            ->orderBy('name', 'asc')
+            ->paginate(10);
 
-    $totalAnggota = User::where('role', 'umum')->count();
+        $totalAnggota = User::where('role', 'umum')->count();
 
-    return view('admin.anggota.index', compact('umums', 'totalAnggota'));
-}
+        // Jika request dari AJAX (live search)
+        if ($request->ajax()) {
+            $query = User::where('role', 'umum')
+                ->when($search, function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orderBy('name', 'asc')
+                ->get();
 
+            return response()->json($query);
+        }
+
+        return view('admin.anggota.index', compact('umums', 'totalAnggota'));
+    }
 
 
     public function create()
@@ -61,35 +70,35 @@ class UserController extends Controller
         return view('admin.anggota.edit', compact('umums'));
     }
 
-public function update(Request $request, User $umums)
-{
-    // Validasi input
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,' . $umums->id,
-        'password' => 'nullable|string|min:6|confirmed',
-    ]);
+    public function update(Request $request, User $umums)
+    {
+        // Validasi input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $umums->id,
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
 
-    // Data yang akan di-update
-    $data = [
-        'name' => $request->name,
-        'email' => $request->email,
-    ];
+        // Data yang akan di-update
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
 
-    // Update password jika diisi
-    if ($request->filled('password')) {
-        $data['password'] = bcrypt($request->password);
+        // Update password jika diisi
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        // Cek hasil update
+        $updated = $umums->update($data);
+
+        if ($updated) {
+            return redirect()->route('admin.anggota.index')->with('success', 'Data anggota diperbarui.');
+        } else {
+            return redirect()->route('admin.anggota.index')->with('error', 'Gagal memperbarui data anggota.');
+        }
     }
-
-    // Cek hasil update
-    $updated = $umums->update($data);
-
-    if ($updated) {
-        return redirect()->route('admin.anggota.index')->with('success', 'Data anggota diperbarui.');
-    } else {
-        return redirect()->route('admin.anggota.index')->with('error', 'Gagal memperbarui data anggota.');
-    }
-}
 
     public function destroy(User $umums)
     {
