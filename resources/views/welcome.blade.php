@@ -203,7 +203,7 @@
                 {{-- Info Kontak --}}
                 <div class="bg-green-50 p-6 rounded-xl shadow">
                     <h4 class="text-2xl font-semibold mb-3 text-green-700">Informasi Kontak</h4>
-                    <p><strong>Alamat:</strong> Jl. Melati No. 123, Bandung, Jawa Barat</p>
+                    <p><strong>Alamat:</strong> Jl. Melati No. 123, Pekanbaru Riau</p>
                     <p><strong>Telepon:</strong> (022) 1234567</p>
                     <p><strong>Email:</strong> info@masjidal-falah.or.id</p>
                     <p><strong>Jam Operasional:</strong> Setiap hari, 04.30 - 21.00 WIB</p>

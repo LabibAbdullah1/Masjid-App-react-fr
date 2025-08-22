@@ -29,11 +29,11 @@
 
             {{-- Penulis / Sumber --}}
             <div>
-                <label for="penulis" class="block font-semibold text-gray-700">Sumber / Penulis</label>
-                <input type="text" name="penulis" id="penulis" value="{{ old('penulis') }}"
+                <label for="source" class="block font-semibold text-gray-700">Sumber / Penulis</label>
+                <input type="text" name="source" id="source" value="{{ old('source') }}"
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring focus:ring-green-200"
                     placeholder="Misal: Al-Qur'an, Hadis, Ulama">
-                @error('penulis')
+                @error('source')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -43,7 +43,7 @@
                 <a href="{{ route('admin.quote.index') }}"
                     class="px-5 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Batal</a>
                 <button type="submit" class="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                    Simpan Quote
+                    Simpan Quotes
                 </button>
             </div>
         </form>
