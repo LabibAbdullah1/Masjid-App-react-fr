@@ -58,18 +58,6 @@
                     </span>
                 </div>
             </div>
-
-            <!-- <div class="mt-4">
-                <h3 class="font-semibold">Total per Kategori</h3>
-                <ul class="list-disc pl-6">
-                    @foreach ($totalPerKategori as $totalPerKat)
-                        <li>
-                            {{ $totalPerKat->kategori ? $totalPerKat->kategori->nama_kategori : 'Tidak Ada Kategori' }}:
-                            Rp {{ number_format($totalPerKat->total, 0, ',', '.') }}
-                        </li>
-                    @endforeach
-                </ul>
-            </div> -->
         </div>
 
         {{-- Tabel Data --}}

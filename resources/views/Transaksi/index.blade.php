@@ -70,18 +70,6 @@
                     </span>
                 </div>
             </div>
-
-            <!-- <div class="mt-4">
-                <h3 class="font-semibold">Total per Kategori</h3>
-                <ul class="list-disc pl-6">
-                    @foreach ($totalPerKategori as $totalPerKat)
-                        <li x-data="counter({{ $totalPerKat->total }})" x-init="start()">
-                            {{ $totalPerKat->kategori ? $totalPerKat->kategori->nama_kategori : 'Tidak Ada Kategori' }}:
-                            Rp <span x-text="displayCount()"></span>
-                        </li>
-                    @endforeach
-                </ul>
-            </div> -->
         </div>
 
         {{-- Tabel Transaksi --}}
