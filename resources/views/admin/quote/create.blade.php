@@ -12,39 +12,28 @@
             Tambah Quote Islami
         </h2>
 
-        {{-- Error Message --}}
-        @if ($errors->any())
-            <div class="mb-4 p-4 bg-red-100 text-red-800 rounded-lg">
-                <ul class="list-disc list-inside">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         {{-- Form --}}
         <form action="{{ route('admin.quote.store') }}" method="POST" class="space-y-5">
             @csrf
 
             {{-- Isi Quote --}}
             <div>
-                <label for="isi" class="block font-semibold text-gray-700">Isi Quote</label>
-                <textarea name="isi" id="isi" rows="4"
+                <label for="text" class="block font-semibold text-gray-700">Isi Quote</label>
+                <textarea name="text" id="text" rows="4"
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring focus:ring-green-200"
-                    placeholder="Masukkan kalimat bijak Islami" required>{{ old('isi') }}</textarea>
-                @error('isi')
+                    placeholder="Masukkan kalimat bijak Islami" required>{{ old('text') }}</textarea>
+                @error('text')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
             {{-- Penulis / Sumber --}}
             <div>
-                <label for="penulis" class="block font-semibold text-gray-700">Sumber / Penulis</label>
-                <input type="text" name="penulis" id="penulis" value="{{ old('penulis') }}"
+                <label for="source" class="block font-semibold text-gray-700">Sumber / Penulis</label>
+                <input type="text" name="source" id="source" value="{{ old('source') }}"
                     class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring focus:ring-green-200"
                     placeholder="Misal: Al-Qur'an, Hadis, Ulama">
-                @error('penulis')
+                @error('source')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
@@ -54,7 +43,7 @@
                 <a href="{{ route('admin.quote.index') }}"
                     class="px-5 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Batal</a>
                 <button type="submit" class="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                    Simpan Quote
+                    Simpan Quotes
                 </button>
             </div>
         </form>
