@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\KategoriKeuangan;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransaksiController extends Controller
 {
@@ -61,7 +62,7 @@ class TransaksiController extends Controller
             $transaksiss = Transaksi::where('kategori_id', $kategoriId)->get();
         } else {
 
-            $transaksiss = Transaksi::where('kategori_id' ,1)->get();
+            $transaksiss = Transaksi::where('kategori_id', 1)->get();
         }
         $kategoriList = KategoriKeuangan::all();
         $activeKategoriName = 'Semua Kategori';
@@ -71,6 +72,8 @@ class TransaksiController extends Controller
                 $activeKategoriName = $activeKategori->nama_kategori;
             }
         }
+        $kategoriAktif = \App\Models\KategoriKeuangan::where('status', 'aktif')->first();
+        $transaksi = \App\Models\Transaksi::where('kategori_id', $kategoriAktif->id)->get();
 
 
         $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
@@ -95,10 +98,66 @@ class TransaksiController extends Controller
             'totalPemasukan',
             'totalPengeluaran',
             'activeKategoriName',
+            'kategoriaktif',
             'saldo',
             'totalPerKategori'
         ));
     }
+
+    //cetak pdf file
+    public function cetakPDF(Request $request)
+    {
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+        $kategoriId = $request->kategori_id; // Ambil kategori aktif dari request
+
+        // Cek apakah kategori dipilih
+        if (!$kategoriId) {
+            return redirect()->back()->with('error', 'Silakan pilih kategori terlebih dahulu sebelum mencetak PDF.');
+        }
+
+        // Ambil data kategori aktif
+        $activeKategori = KategoriKeuangan::find($kategoriId);
+        if (!$activeKategori) {
+            return redirect()->back()->with('error', 'Kategori yang dipilih tidak ditemukan.');
+        }
+
+        $activeKategoriName = $activeKategori->nama_kategori;
+
+        // Ambil data keuangan hanya untuk kategori aktif
+        $keuangan = Transaksi::where('kategori_id', $kategoriId)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->orderBy('tanggal', 'ASC')
+            ->get();
+
+        // Jika tidak ada data keuangan, beri notifikasi
+        if ($keuangan->isEmpty()) {
+            return redirect()->back()->with('error', 'Tidak ada data keuangan untuk kategori ini pada bulan dan tahun yang dipilih.');
+        }
+
+        // Hitung total pemasukan & pengeluaran sesuai kategori aktif
+        $totalPemasukan = $keuangan->where('jenis', 'pemasukan')->sum('jumlah');
+        $totalPengeluaran = $keuangan->where('jenis', 'pengeluaran')->sum('jumlah');
+        $saldoAkhir = $totalPemasukan - $totalPengeluaran;
+
+        // Generate PDF
+        $pdf = \PDF::loadView('transaksi.cetak', compact(
+            'keuangan',
+            'bulan',
+            'tahun',
+            'activeKategoriName',
+            'totalPemasukan',
+            'totalPengeluaran',
+            'saldoAkhir'
+        ));
+
+        return $pdf->stream('laporan-keuangan-' . $activeKategoriName . '-' . $bulan . '-' . $tahun . '.pdf');
+    }
+
+
+
+
 
     // buat data kauangan
     public function create()

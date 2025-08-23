@@ -113,6 +113,7 @@ return [
     Illuminate\Translation\TranslationServiceProvider::class,
     Illuminate\Validation\ValidationServiceProvider::class,
     Illuminate\View\ViewServiceProvider::class,
+    Barryvdh\DomPDF\ServiceProvider::class,
 
     /*
      * Application Service Providers...
@@ -160,5 +161,10 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'aliases' => [
+    'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+    'Auth' => Illuminate\Support\Facades\Auth::class,
+    ],
+
 
 ];

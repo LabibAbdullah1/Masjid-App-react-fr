@@ -58,6 +58,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     //Kelelo Keuangan
     Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('/transaksi/cetak', [TransaksiController::class, 'cetakPDF'])->name('transaksi.cetak');
     Route::get('/transaksi/create', [TransaksiController::class, 'create'])->name('transaksi.create');
     Route::post('/admin/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::get('/transaksi/{transaksi}/edit', [TransaksiController::class, 'edit'])->name('transaksi.edit');

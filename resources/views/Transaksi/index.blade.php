@@ -11,12 +11,30 @@
             Pilih kategori di bawah untuk menampilkan data sesuai kebutuhan
         </p>
 
-        <div class="flex justify-end mb-4">
+        <div class="flex justify-end mb-4 space-x-3">
+            {{-- Tombol Cetak PDF --}}
+            <form action="{{ route('transaksi.cetak') }}" method="GET" target="_blank">
+                <input type="hidden" name="bulan" value="{{ request('bulan') ?? date('m') }}">
+                <input type="hidden" name="tahun" value="{{ request('tahun') ?? date('Y') }}">
+                <input type="hidden" name="kategori_id" value="{{ $kategoriId ?? '' }}">
+                <button type="submit"
+                    class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
+                    {{ empty($kategoriId) ? 'disabled' : '' }}>
+                    Cetak PDF
+                </button>
+            </form>
+
+
+
+            {{-- Tombol Tambah Transaksi --}}
             <a href="{{ route('transaksi.create') }}"
-                class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                class="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
                 + Tambah Transaksi
             </a>
         </div>
+
+
+
 
         {{-- Navigasi Kategori --}}
         <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0" data-aos="fade-up" data-aos-delay="200">
