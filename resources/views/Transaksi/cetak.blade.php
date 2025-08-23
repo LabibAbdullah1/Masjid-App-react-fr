@@ -133,8 +133,8 @@
 
     {{-- Kop Surat --}}
     <div class="kop-surat">
-        <h2>MASJID AL-IKHLAS</h2>
-        <p>Jl. Contoh No. 123, Bandung, Jawa Barat</p>
+        <h2>MASJID AL-FALAH</h2>
+        <p>Jl.Melati No. 123, Pekanbaru Riau</p>
         <p>Telp: 021-123456 | Email: info@masjid.com</p>
     </div>
 
@@ -211,7 +211,7 @@
 
         <!-- Kolom Ketua -->
         <div class="signature-box">
-            <p>Bandung, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
+            <p>Pekanbaru, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}</p>
             <p><strong>Ketua</strong></p>
             <br><br><br> <!-- Jarak untuk tanda tangan -->
             <p>(___________________)</p>

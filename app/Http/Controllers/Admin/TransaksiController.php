@@ -142,7 +142,7 @@ class TransaksiController extends Controller
         $saldoAkhir = $totalPemasukan - $totalPengeluaran;
 
         // Generate PDF
-        $pdf = \PDF::loadView('transaksi.cetak', compact(
+        $pdf = PDF::loadView('transaksi.cetak', compact(
             'keuangan',
             'bulan',
             'tahun',

@@ -13,18 +13,17 @@
 
         <div class="flex justify-end mb-4 space-x-3">
             {{-- Tombol Cetak PDF --}}
-            <form action="{{ route('transaksi.cetak') }}" method="GET" target="_blank">
-                <input type="hidden" name="bulan" value="{{ request('bulan') ?? date('m') }}">
-                <input type="hidden" name="tahun" value="{{ request('tahun') ?? date('Y') }}">
-                <input type="hidden" name="kategori_id" value="{{ $kategoriId ?? '' }}">
-                <button type="submit"
-                    class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300"
-                    {{ empty($kategoriId) ? 'disabled' : '' }}>
-                    Cetak PDF
-                </button>
-            </form>
-
-
+            @if (!empty($kategoriId))
+                <form action="{{ route('transaksi.cetak') }}" method="GET" target="_blank">
+                    <input type="hidden" name="bulan" value="{{ request('bulan') ?? date('m') }}">
+                    <input type="hidden" name="tahun" value="{{ request('tahun') ?? date('Y') }}">
+                    <input type="hidden" name="kategori_id" value="{{ $kategoriId }}">
+                    <button type="submit"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                        Cetak PDF
+                    </button>
+                </form>
+            @endif
 
             {{-- Tombol Tambah Transaksi --}}
             <a href="{{ route('transaksi.create') }}"
@@ -32,9 +31,6 @@
                 + Tambah Transaksi
             </a>
         </div>
-
-
-
 
         {{-- Navigasi Kategori --}}
         <nav class="bg-green-600 text-white rounded-t-lg p-4 shadow-lg mb-0" data-aos="fade-up" data-aos-delay="200">
@@ -60,9 +56,7 @@
         {{-- Ringkasan Keuangan --}}
         <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600" data-aos="fade-up"
             data-aos-delay="200">
-
             <h2 class="text-lg font-semibold mb-3">Ringkasan Keuangan</h2>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Total Pemasukan -->
                 <div x-data="counter({{ $totalPemasukan }})" x-init="start()" class="p-3 bg-green-100 rounded">
@@ -98,22 +92,32 @@
                     <tr>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            No</th>
+                            No
+                        </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Tanggal</th>
+                            Tanggal
+                        </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Jenis</th>
+                            Jenis
+                        </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Jumlah</th>
+                            Jumlah
+                        </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
-                            Keterangan</th>
+                            Keterangan
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 text-left text-sm font-semibold uppercase tracking-wider">
+                            Kategori
+                        </th>
                         <th
                             class="px-5 py-3 border-b-2 border-gray-200 text-center text-sm font-semibold uppercase tracking-wider">
-                            Aksi</th>
+                            Aksi
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,6 +137,10 @@
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{ $item->nama }}
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                {{-- Tampilkan nama kategori --}}
+                                {{ $item->kategori ? $item->kategori->nama_kategori : '-' }}
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                 <div class="flex justify-center space-x-2">
@@ -154,14 +162,16 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="px-5 py-5 text-center text-gray-500">
+                            <td colspan="7" class="px-5 py-5 text-center text-gray-500">
                                 Tidak ada data
                             </td>
                         </tr>
                     @endforelse
                 </tbody>
+
             </table>
         </div>
+
 
         {{-- Pagination --}}
         <div class="mt-6">
