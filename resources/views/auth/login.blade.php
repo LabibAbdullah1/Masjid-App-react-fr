@@ -74,12 +74,11 @@
                     href="{{ route('register') }}">
                     {{ __('Belum punya akun?') }}
                 </a>
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-green-600 hover:text-green-900 rounded-md focus:outline-none"
-                        href="{{ route('password.request') }}">
-                        {{ __('Lupa password?') }}
-                    </a>
-                @endif
+                <a class="underline text-sm text-green-600 hover:text-green-900 rounded-md focus:outline-none"
+                    href="{{ route('password.request') }}">
+                    {{ __('Lupa password?') }}
+                </a>
+
 
                 <x-primary-button
                     class="ms-3 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out">
