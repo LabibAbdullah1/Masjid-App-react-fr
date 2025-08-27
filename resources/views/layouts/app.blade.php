@@ -88,7 +88,7 @@
             // Jalankan animasi progress
             interval = setInterval(() => {
                 if (progress < 95) {
-                    progress += 10;
+                    progress += 15;
                     loadingBar.style.width = progress + '%';
                 }
             }, 300);
