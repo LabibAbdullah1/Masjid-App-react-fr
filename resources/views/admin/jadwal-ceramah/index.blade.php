@@ -74,7 +74,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('admin.jadwal-ceramah.destroy', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
+                                        onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

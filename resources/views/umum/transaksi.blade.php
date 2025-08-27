@@ -82,7 +82,7 @@
                             <td class="px-5 py-5 text-sm">{{ $item->created_at->format('d-m-Y') }}</td>
                             <td class="px-5 py-5 text-sm capitalize">{{ $item->jenis }}</td>
                             <td class="px-5 py-5 text-sm">Rp {{ number_format($item->jumlah, 0, ',', '.') }}</td>
-                            <td class="px-5 py-5 text-sm">{{ $item->nama }}</td>
+                            <td class="px-5 py-5 text-sm">{{ $item->keterangan }}</td>
                         </tr>
                     @empty
                         <tr>

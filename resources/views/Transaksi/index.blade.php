@@ -135,8 +135,8 @@
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 Rp {{ number_format($item->jumlah, 0, ',', '.') }}
                             </td>
-                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                {{ $item->nama }}
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm first-letter:uppercase">
+                                {{ $item->keterangan }}
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 {{-- Tampilkan nama kategori --}}
@@ -149,7 +149,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('transaksi.destroy', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

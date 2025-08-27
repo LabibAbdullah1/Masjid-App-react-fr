@@ -72,8 +72,8 @@ class TransaksiController extends Controller
                 $activeKategoriName = $activeKategori->nama_kategori;
             }
         }
-        $kategoriAktif = \App\Models\KategoriKeuangan::where('status', 'aktif')->first();
-        $transaksi = \App\Models\Transaksi::where('kategori_id', $kategoriAktif->id)->get();
+        $kategoriAktif = KategoriKeuangan::where('status', 'aktif')->first();
+        $transaksi = Transaksi::where('kategori_id', $kategoriAktif->id)->get();
 
 
         $totalPemasukan = (clone $query)->where('jenis', 'Pemasukan')->sum('jumlah');
@@ -98,7 +98,6 @@ class TransaksiController extends Controller
             'totalPemasukan',
             'totalPengeluaran',
             'activeKategoriName',
-            'kategoriaktif',
             'saldo',
             'totalPerKategori'
         ));
@@ -154,10 +153,6 @@ class TransaksiController extends Controller
 
         return $pdf->stream('laporan-keuangan-' . $activeKategoriName . '-' . $bulan . '-' . $tahun . '.pdf');
     }
-
-
-
-
 
     // buat data kauangan
     public function create()

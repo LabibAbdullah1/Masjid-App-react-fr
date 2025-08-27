@@ -100,7 +100,7 @@ class UserController extends Controller
         }
     }
 
-    public function destroy(User $umums)
+    public function delete(User $umums)
     {
         $umums->delete();
 

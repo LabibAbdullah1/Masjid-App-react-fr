@@ -41,7 +41,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

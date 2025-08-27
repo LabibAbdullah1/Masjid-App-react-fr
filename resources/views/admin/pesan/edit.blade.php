@@ -3,7 +3,7 @@
 @section('title', 'Balas Pesan Saran')
 
 @section('content')
-    <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-lg shadow">
+    <div class="max-w-3xl mx-auto mt-10 bg-white p-6 rounded-lg shadow" data-aos="fade-up">
         <h2 class="text-xl font-semibold text-gray-800 mb-4">Balas Pesan Saran</h2>
 
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition>

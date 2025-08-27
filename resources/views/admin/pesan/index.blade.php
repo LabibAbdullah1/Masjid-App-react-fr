@@ -58,7 +58,8 @@
                             <td class="border px-3 py-2">
                                 <a href="{{ route('admin.pesan.edit', $pesan->id) }}"
                                     class="text-blue-600 hover:underline">Balas</a>
-                                <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.pesan.destroy', $pesan->id) }}" method="POST"
+                                    class="delete-form inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:underline"

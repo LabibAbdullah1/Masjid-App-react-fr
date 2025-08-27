@@ -63,9 +63,91 @@
             </div>
         </div>
     @endauth
+    <x-loading />
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
+        const loadingElement = document.getElementById('global-loading');
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+        let progress = 0;
+        let interval = null;
+
+        // Tampilkan loading
+        function showLoading() {
+            if (!loadingElement) return;
+
+            loadingElement.classList.remove('hidden');
+            progress = 0;
+            loadingBar.style.width = '0%';
+            loadingText.textContent = 'Memuat halaman...';
+
+            // Simpan status loading ke localStorage
+            localStorage.setItem('isLoading', 'true');
+
+            // Jalankan animasi progress
+            interval = setInterval(() => {
+                if (progress < 95) {
+                    progress += 10;
+                    loadingBar.style.width = progress + '%';
+                }
+            }, 300);
+        }
+
+        // Sembunyikan loading
+        function hideLoading() {
+            if (!loadingElement) return;
+
+            // Penuhkan bar, ganti teks
+            loadingBar.style.width = '100%';
+            loadingText.textContent = 'Selesai!';
+
+            // Beri delay biar smooth
+            setTimeout(() => {
+                loadingElement.classList.add('hidden');
+                clearInterval(interval);
+                localStorage.removeItem('isLoading');
+            }, 400);
+        }
+
+        // Pasang event ke semua form
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', () => {
+                    showLoading();
+                });
+            });
+
+            // Pasang event ke semua link (opsional)
+            document.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                    link.addEventListener('click', () => {
+                        showLoading();
+                    });
+                }
+            });
+        });
+
+        // Saat halaman selesai dimuat → sembunyikan loading
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('isLoading')) {
+                hideLoading();
+            }
+        });
+
+        // Untuk form delete
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showLoading();
+                    this.submit();
+                });
+            });
+        });
+
+
         AOS.init({
             duration: 800, // durasi animasi dalam ms
             easing: 'ease-out', // tipe easing

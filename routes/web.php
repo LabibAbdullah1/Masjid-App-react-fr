@@ -107,10 +107,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // ----------------- //
 // route khusus umum
 // ----------------- //
-    //jadwal sholat layer
-    Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
-        // dashboar layer
-    Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
+//jadwal sholat layer
+Route::get('/dashboard', [JadwalSholatController::class, 'umumDashboard'])->name('umum.dashboard');
+// dashboar layer
+Route::get('/dashboard', [UmumDashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware(['auth', 'role:umum'])->group(function () {
 

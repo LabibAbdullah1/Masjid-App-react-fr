@@ -32,7 +32,7 @@
                     @endif
 
                     {{-- Tombol hapus pesan --}}
-                    <form action="{{ route('umum.pesan.destroy', $pesan->id) }}" method="POST" class="mt-3">
+                    <form action="{{ route('umum.pesan.destroy', $pesan->id) }}" method="POST" class="mt-3 delete-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit" onclick="return confirm('Yakin ingin menghapus pesan ini?')"
@@ -48,7 +48,7 @@
 
 
         {{-- Form buat kirim pesan baru --}}
-        <form action="{{ route('umum.pesan.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('umum.pesan.store') }}" method="POST" class="space-y-4" required>
             @csrf
             <div>
                 <label for="pesan" class="block text-gray-700 font-medium">Tulis Pesan / Saran</label>

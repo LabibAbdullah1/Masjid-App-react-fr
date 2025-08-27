@@ -70,7 +70,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('admin.anggota.delete', $umum->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus anggota ini?')">
+                                        onsubmit="return confirm('Yakin ingin menghapus anggota ini?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

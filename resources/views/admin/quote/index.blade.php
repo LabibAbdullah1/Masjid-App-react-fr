@@ -17,7 +17,8 @@
         </div>
 
         <!-- Tabel -->
-        <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600" data-aos="fade-up" data-aos-delay="200" >
+        <div class="bg-white shadow-lg rounded-lg overflow-x-auto max-w-full border-2 border-green-600" data-aos="fade-up"
+            data-aos-delay="200">
             <table class="min-w-full leading-normal">
                 <thead class="bg-green-600 text-white">
                     <tr>
@@ -58,7 +59,7 @@
                                         Edit
                                     </a>
                                     <form action="{{ route('admin.quote.destroy', $quote->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus quote ini?')">
+                                        onsubmit="return confirm('Yakin ingin menghapus quote ini?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

@@ -41,7 +41,7 @@
                                     <a href="{{ route('admin.galeri.edit', $item->id) }}"
                                         class="px-3 py-1 bg-yellow-500 text-white text-sm rounded hover:bg-yellow-600">Edit</a>
                                     <form action="{{ route('admin.galeri.destroy', $item->id) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus?')">
+                                        onsubmit="return confirm('Yakin ingin menghapus?')" class="delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

@@ -44,6 +44,7 @@
             {{-- Page Content --}}
             <main class="flex-grow max-w-7xl mx-auto w-full py-6 px-4 sm:px-6 lg:px-8 ">
                 @yield('content')
+
             </main>
 
             {{-- Footer --}}
@@ -54,150 +55,276 @@
                     <p class="text-sm">Dibuat dengan <span class="text-yellow-300">❤</span> untuk memakmurkan masjid</p>
                 </div>
             </footer>
-
         </div>
     </div>
+    {{-- animasi loading --}}
+    <x-loading />
     {{-- Notifikasi Overlay --}}
     @include('partials.notification')
-</body>
+    @stack('scripts')
 
-<!-- AOS JS -->
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Kunci unik per halaman (berdasarkan URL path)
-        const pageKey = "aosPlayed_" + window.location.pathname;
 
-        // Cek apakah di halaman ini AOS sudah pernah dijalankan
-        if (sessionStorage.getItem(pageKey)) {
-            // Jika sudah, hapus semua animasi AOS
-            document.querySelectorAll("[data-aos]").forEach(function(el) {
-                el.removeAttribute("data-aos");
-            });
-        } else {
-            // Jika belum → jalankan AOS
-            AOS.init({
-                once: true,
-                duration: 800,
-                easing: "ease-in-out",
-            });
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        const loadingElement = document.getElementById('global-loading');
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+        let progress = 0;
+        let interval = null;
 
-            // Simpan status AOS untuk halaman ini
-            sessionStorage.setItem(pageKey, "true");
+        // Tampilkan loading
+        function showLoading() {
+            if (!loadingElement) return;
+
+            loadingElement.classList.remove('hidden');
+            progress = 0;
+            loadingBar.style.width = '0%';
+            loadingText.textContent = 'Memuat halaman...';
+
+            // Simpan status loading ke localStorage
+            localStorage.setItem('isLoading', 'true');
+
+            // Jalankan animasi progress
+            interval = setInterval(() => {
+                if (progress < 95) {
+                    progress += 10;
+                    loadingBar.style.width = progress + '%';
+                }
+            }, 300);
         }
-    });
 
-    // Reset AOS ketika pindah halaman
-    document.addEventListener("click", function(e) {
-        const link = e.target.closest("a");
-        if (link && link.href && link.origin === window.location.origin) {
-            // Hanya reset ketika pindah halaman internal, bukan refresh
-            Object.keys(sessionStorage).forEach(function(key) {
-                if (key.startsWith("aosPlayed_")) {
-                    sessionStorage.removeItem(key);
+        // Sembunyikan loading
+        function hideLoading() {
+            if (!loadingElement) return;
+
+            // Penuhkan bar, ganti teks
+            loadingBar.style.width = '100%';
+            loadingText.textContent = 'Selesai!';
+
+            // Beri delay biar smooth
+            setTimeout(() => {
+                loadingElement.classList.add('hidden');
+                clearInterval(interval);
+                localStorage.removeItem('isLoading');
+            }, 400);
+        }
+
+        // Pasang event ke semua form
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', () => {
+                    showLoading();
+                });
+            });
+
+            // Pasang event ke semua link (opsional)
+            document.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+                    link.addEventListener('click', () => {
+                        showLoading();
+                    });
                 }
             });
-        }
-    });
+        });
 
-    // animasi countup  angka
-    function counter(target) {
-        return {
-            count: 0,
-            target: target,
-            start() {
-                const step = Math.ceil(this.target / 100); // penambahan tiap frame
-                const update = () => {
-                    if (this.count < this.target) {
-                        this.count += step;
-                        if (this.count > this.target) this.count = this.target;
-                        requestAnimationFrame(update);
-                    }
-                }
-                update();
-            },
-            displayCount() {
-                return this.count.toLocaleString(); // format ribuan
-            }
-        }
-    }
-
-    //animasi angka countdown
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('countdown', (target) => ({
-            targetDate: new Date(target).getTime(),
-            display: '',
-            start() {
-                this.update();
-                setInterval(() => this.update(), 1000);
-            },
-            update() {
-                const now = new Date().getTime();
-                const distance = this.targetDate - now;
-
-                if (distance <= 0) {
-                    this.display = 'Selesai';
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                this.display =
-                    (days > 0 ? days + 'h ' : '') +
-                    hours + 'j ' +
-                    minutes + 'm ' +
-                    seconds + 'd';
-            }
-        }))
-    })
-
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('notification', {
-            show: false,
-            message: '',
-            status: 'success', // 'success' atau 'error'
-
-            // Tampilkan notifikasi sukses
-            showSuccess(msg, autoHide = true, duration = 3000) {
-                this.message = msg;
-                this.status = 'success';
-                this.show = true;
-                if (autoHide) {
-                    setTimeout(() => this.hide(), duration);
-                }
-            },
-
-            // Tampilkan notifikasi error
-            showError(msg, autoHide = false, duration = 3000) {
-                this.message = msg;
-                this.status = 'error';
-                this.show = true;
-                if (autoHide) {
-                    setTimeout(() => this.hide(), duration);
-                }
-            },
-
-            // Tutup notifikasi
-            hide() {
-                this.show = false
+        // Saat halaman selesai dimuat → sembunyikan loading
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('isLoading')) {
+                hideLoading();
             }
         });
-    });
 
-    document.addEventListener('alpine:init', () => {
-        @if (session('success'))
-            Alpine.store('notification').showSuccess("{{ session('success') }}");
-        @endif
+        // Untuk form delete
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.delete-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showLoading();
+                    this.submit();
+                });
+            });
+        });
 
-        @if (session('error'))
-            Alpine.store('notification').showError("{{ session('error') }}", false);
-        @endif
-    });
-</script>
+        // aos
+        document.addEventListener("DOMContentLoaded", function() {
+            // Kunci unik per halaman (berdasarkan URL path)
+            const pageKey = "aosPlayed_" + window.location.pathname;
 
+            // Cek apakah di halaman ini AOS sudah pernah dijalankan
+            if (sessionStorage.getItem(pageKey)) {
+                // Jika sudah, hapus semua animasi AOS
+                document.querySelectorAll("[data-aos]").forEach(function(el) {
+                    el.removeAttribute("data-aos");
+                });
+            } else {
+                // Jika belum → jalankan AOS
+                AOS.init({
+                    once: true,
+                    duration: 800,
+                    easing: "ease-in-out",
+                });
+
+                // Simpan status AOS untuk halaman ini
+                sessionStorage.setItem(pageKey, "true");
+            }
+        });
+
+        // Reset AOS ketika pindah halaman
+        document.addEventListener("click", function(e) {
+            const link = e.target.closest("a");
+            if (link && link.href && link.origin === window.location.origin) {
+                // Hanya reset ketika pindah halaman internal, bukan refresh
+                Object.keys(sessionStorage).forEach(function(key) {
+                    if (key.startsWith("aosPlayed_")) {
+                        sessionStorage.removeItem(key);
+                    }
+                });
+            }
+        });
+
+        // animasi countup  angka
+        function counter(target) {
+            return {
+                count: 0,
+                target: target,
+                start() {
+                    const step = Math.ceil(this.target / 100); // penambahan tiap frame
+                    const update = () => {
+                        if (this.count < this.target) {
+                            this.count += step;
+                            if (this.count > this.target) this.count = this.target;
+                            requestAnimationFrame(update);
+                        }
+                    }
+                    update();
+                },
+                displayCount() {
+                    return this.count.toLocaleString(); // format ribuan
+                }
+            }
+        }
+
+        //animasi angka countdown
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('countdown', (target) => ({
+                targetDate: new Date(target).getTime(),
+                display: '',
+                start() {
+                    this.update();
+                    setInterval(() => this.update(), 1000);
+                },
+                update() {
+                    const now = new Date().getTime();
+                    const distance = this.targetDate - now;
+
+                    if (distance <= 0) {
+                        this.display = 'Selesai';
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    this.display =
+                        (days > 0 ? days + 'h ' : '') +
+                        hours + 'j ' +
+                        minutes + 'm ' +
+                        seconds + 'd';
+                }
+            }))
+        })
+
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('notification', {
+                show: false,
+                message: '',
+                status: 'success', // 'success' atau 'error'
+
+                // Tampilkan notifikasi sukses
+                showSuccess(msg, autoHide = true, duration = 3000) {
+                    this.message = msg;
+                    this.status = 'success';
+                    this.show = true;
+                    if (autoHide) {
+                        setTimeout(() => this.hide(), duration);
+                    }
+                },
+
+                // Tampilkan notifikasi error
+                showError(msg, autoHide = false, duration = 3000) {
+                    this.message = msg;
+                    this.status = 'error';
+                    this.show = true;
+                    if (autoHide) {
+                        setTimeout(() => this.hide(), duration);
+                    }
+                },
+
+                // Tutup notifikasi
+                hide() {
+                    this.show = false
+                }
+            });
+        });
+
+        document.addEventListener('alpine:init', () => {
+            @if (session('success'))
+                Alpine.store('notification').showSuccess("{{ session('success') }}");
+            @endif
+
+            @if (session('error'))
+                Alpine.store('notification').showError("{{ session('error') }}", false);
+            @endif
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const logoutButton = document.getElementById('logout-button');
+            const logoutModal = document.getElementById('logout-modal');
+            const confirmLogout = document.getElementById('confirm-logout');
+            const cancelLogout = document.getElementById('cancel-logout');
+            const logoutForm = document.getElementById('logout-form');
+
+            // Saat klik tombol logout → tampilkan modal
+            logoutButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutModal.classList.remove('hidden');
+                logoutModal.classList.add('flex');
+            });
+
+            // Tombol batal → tutup modal
+            cancelLogout.addEventListener('click', function() {
+                logoutModal.classList.add('hidden');
+                logoutModal.classList.remove('flex');
+            });
+
+            // Tombol konfirmasi → submit form POST logout
+            confirmLogout.addEventListener('click', function() {
+                logoutForm.submit();
+            });
+
+            // Klik di luar modal → tutup modal
+            window.addEventListener('click', function(e) {
+                if (e.target === logoutModal) {
+                    logoutModal.classList.add('hidden');
+                    logoutModal.classList.remove('flex');
+                }
+            });
+
+            // Tekan ESC → tutup modal
+            window.addEventListener('keydown', function(e) {
+                if (e.key === "Escape") {
+                    logoutModal.classList.add('hidden');
+                    logoutModal.classList.remove('flex');
+                }
+            });
+        });
+    </script>
+</body>
 
 
 </html>
