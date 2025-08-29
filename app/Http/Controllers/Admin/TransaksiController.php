@@ -36,6 +36,12 @@ class TransaksiController extends Controller
             ->orderByDesc('total')
             ->get();
 
+        $kategoriAktif = null;
+
+        if ($kategoriId && $kategoriId !== 'semua') {
+            $kategoriAktif = KategoriKeuangan::find($kategoriId);
+        }
+
         return view('transaksi.index', compact(
             'transaksis',
             'kategoriList',
@@ -43,7 +49,8 @@ class TransaksiController extends Controller
             'totalPemasukan',
             'totalPengeluaran',
             'saldo',
-            'totalPerKategori'
+            'totalPerKategori',
+            'kategoriAktif',
         ));
     }
 

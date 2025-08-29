@@ -56,7 +56,10 @@
         {{-- Ringkasan Keuangan --}}
         <div class="bg-white shadow-md p-4 rounded-b-lg mb-6 border-2 border-green-600" data-aos="fade-up"
             data-aos-delay="200">
-            <h2 class="text-lg font-semibold mb-3">Ringkasan Keuangan</h2>
+            <h2 class="text-lg font-semibold mb-3">
+                Ringkasan Keuangan: {{ $kategoriAktif->nama_kategori ?? 'Keseluruhan' }}
+            </h2>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <!-- Total Pemasukan -->
                 <div x-data="counter({{ $totalPemasukan }})" x-init="start()" class="p-3 bg-green-100 rounded">

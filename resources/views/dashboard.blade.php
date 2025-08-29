@@ -108,8 +108,18 @@
                         🗓 Jadwal Ceramah Bulan Ini
                     </h2>
 
+                    @php
+                        $today = \Carbon\Carbon::today();
+                        $nextMonth = \Carbon\Carbon::today()->addDays(30);
+
+                        $filteredCeramah = $jadwalCeramah->filter(function ($jadwal) use ($today, $nextMonth) {
+                            $tanggal = \Carbon\Carbon::parse($jadwal->tanggal);
+                            return $tanggal->between($today, $nextMonth);
+                        });
+                    @endphp
+
                     <div class="mt-4 space-y-3">
-                        @forelse ($jadwalCeramah as $jadwal)
+                        @forelse ($filteredCeramah as $jadwal)
                             <div
                                 class="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200 hover:shadow-md transition">
 

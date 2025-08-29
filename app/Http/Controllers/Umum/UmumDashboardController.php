@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Umum;
 
+use Carbon\Carbon;
 use App\Models\Quote;
 use App\Models\Galeri;
 use Illuminate\Http\Request;
@@ -23,13 +24,12 @@ class UmumDashboardController extends Controller
         if ($kategoriKasMasjid) {
             // 2. Ambil data transaksi hanya untuk kategori "Kas Masjid"
             $totalPemasukan = Transaksi::where('jenis', 'pemasukan')
-                                    ->where('kategori_id', $kategoriKasMasjid->id)
-                                    ->sum('jumlah');
+                ->where('kategori_id', $kategoriKasMasjid->id)
+                ->sum('jumlah');
 
             $totalPengeluaran = Transaksi::where('jenis', 'pengeluaran')
-                                    ->where('kategori_id', $kategoriKasMasjid->id)
-                                    ->sum('jumlah');
-
+                ->where('kategori_id', $kategoriKasMasjid->id)
+                ->sum('jumlah');
         } else {
             // Jika kategori tidak ditemukan, set nilai ke 0
             $totalPemasukan = 0;
@@ -42,9 +42,13 @@ class UmumDashboardController extends Controller
         $quote = Quote::inRandomOrder()->first();
 
         // Ambil jadwal ceramah bulanan
-        $jadwalCeramah = JadwalCeramah::whereMonth('tanggal', now()->month)
-                                        ->orderBy('tanggal')
-                                        ->get();
+        $today = Carbon::today();
+
+        $nextMonth = Carbon::today()->addDays(30);
+
+        $jadwalCeramah = JadwalCeramah::whereBetween('tanggal', [$today, $nextMonth])
+            ->orderBy('tanggal')
+            ->get();
 
         // Ambil beberapa item galeri terbaru (contoh: 4 foto)
         $galeri = Galeri::latest()->take(4)->get();
