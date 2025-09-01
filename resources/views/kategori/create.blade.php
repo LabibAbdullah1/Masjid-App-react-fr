@@ -1,29 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8 max-w-xl" data-aos="fade-up">
-        <h1 class="text-3xl font-bold mb-6 text-center text-green-700">
-            <i class="fas fa-plus-square mr-2"></i> Tambah Kategori Baru
+    <div class="container bg-green-50/75 dark:bg-green-900 overflow-hidden shadow-xl sm:rounded-lg border-t-4 border-green-700 border max-w-xl mx-auto"
+        data-aos="fade-up">
+        <h1 class=" text-center text-3xl font-bold mt-4 text-green-800 dark:text-green-300 tracking-wide">
+            Tambah Kategori Baru
         </h1>
-
-        <div class="bg-white shadow-lg rounded-lg p-6 border-2 border-green-600">
+        <div class="p-6 text-gray-900 dark:text-gray-100">
             <form action="{{ route('kategori.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="nama_kategori" class="block text-gray-700 text-sm font-bold mb-2">Nama Kategori</label>
+                    <label for="nama_kategori" class="block font-medium text-green-800 dark:text-green-300">Nama
+                        Kategori</label>
                     <input type="text" name="nama_kategori" id="nama_kategori"
-                        class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="block mt-1 w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-green-500 focus:ring-green-500"
                         required>
                 </div>
 
-                <div class="flex items-center justify-between">
+                <div class="flex justify-end space-x-3">
                     <a href="{{ route('kategori.index') }}"
-                        class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        class="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-semibold text-xs text-gray-800 dark:text-gray-200 uppercase tracking-widest hover:bg-gray-300 dark:hover:bg-gray-600">
                         Batal
                     </a>
                     <button type="submit"
-                        class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
-                        <i class="fas fa-save mr-2"></i> Simpan Kategori
+                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        </i> Simpan Kategori
                     </button>
                 </div>
             </form>

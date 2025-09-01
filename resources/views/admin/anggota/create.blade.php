@@ -15,7 +15,7 @@
 
 
         <div
-            class="bg-green-50/75 dark:bg-green-900 overflow-hidden shadow-xl sm:rounded-lg border-t-4 border-green-700 border fade-in-up">
+            class="bg-green-50/75 dark:bg-green-900 overflow-hidden shadow-xl sm:rounded-lg border-t-4 border-green-700 border">
 
 
             <div class="p-6 text-gray-900 dark:text-gray-100">

@@ -24,7 +24,7 @@
                 <!-- Header -->
                 <div class="text-center py-8 ">
                     <h2 class="text-3xl font-bold text-green-800 dark:text-green-300">
-                        🕌 Edit Data Anggota
+                        Edit Data Anggota
                     </h2>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
                         Perbarui informasi anggota jamaah masjid
@@ -40,7 +40,7 @@
                     <div>
                         <x-input-label for="name" :value="__('Nama Lengkap')" class="dark:text-gray-200" />
                         <x-text-input type="text" name="name" id="name"
-                            class="block mt-1 w-full dark:bg-gray-700 dark:text-gray-100 dark:border-gray-600 focus:border-green-500 focus:ring-green-500 transition-colors duration-300"
+                            class="block mt-1 w-full dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:border-green-500 focus:ring-green-500 transition-colors duration-300"
                             value="{{ old('name', $umums->name) }}" placeholder="Masukkan nama Baru" required autofocus
                             autocomplete="name" />
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
