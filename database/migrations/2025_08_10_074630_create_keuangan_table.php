@@ -11,7 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         // Buat tabel 'transaksis' baru dengan kolom yang diminta
         Schema::create('transaksis', function (Blueprint $table) {
             // Kolom id sebagai primary key
